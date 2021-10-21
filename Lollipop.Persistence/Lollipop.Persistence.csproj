@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lollipop.Application\Lollipop.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+    <Folder Include="DbContext\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="RelationClasses\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+</Project>
