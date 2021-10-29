@@ -18,6 +18,8 @@
         /// </summary>
         public IEnumerable<Advertisement> Advertisements{get;private set;}
 
+        private Keyword(){}
+
         private Keyword(string name)
         {
             Name = name.ToLower();

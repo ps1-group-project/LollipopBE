@@ -45,6 +45,8 @@
         /// </summary>
         public DateTime CreationDate { get; private set; }
 
+        private Advertisement(){}
+
         private Advertisement(int userId, string title, string content, IEnumerable<Category> categories, IEnumerable<Keyword> keywords)
         {
             UserId = userId;

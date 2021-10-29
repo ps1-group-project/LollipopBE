@@ -24,6 +24,8 @@
         /// </summary>
         public DateTime CreationDate { get; init; }
 
+        private Message(){}
+
         private Message(int userId, string content)
         {
             UserId = userId;

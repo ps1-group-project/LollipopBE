@@ -24,3 +24,7 @@ namespace Lollipop.Persistence.DbContext
         }
     }
 }
+//by stworzyc nowa migracje
+//dotnet ef migrations add --startup-project .\Lollipop.API\Lollipop.API.csproj --project .\Lollipop.Persistence\Lollipop.Persistence.csproj <nazwa migracji>
+//by uaktualnic db(jesli istnieje i jest działające połączenie)
+//dotnet ef migrations update --startup-project .\Lollipop.API\Lollipop.API.csproj --project .\Lollipop.Persistence\Lollipop.Persistence.csproj

@@ -12,6 +12,8 @@
         /// </summary>
         public string Word { get; private set; }
 
+        private ForbiddenWord(){}
+
         private ForbiddenWord(string word)
         {
             Word = word;

@@ -24,6 +24,8 @@
         /// </summary>
         public IEnumerable<Advertisement> Advertisements{get;private set;}
 
+        private Category(){}
+
         private Category(string name, IEnumerable<AttributeC> attributes)
         {
             Name = name;
