@@ -17,12 +17,18 @@
         /// <summary>
         /// List of attributes for category.
         /// </summary>
-        public IEnumerable<Attribute> Attributes { get; private set; }
+        public IEnumerable<AttributeC> Attributes { get; private set; }
 
-        private Category(string name, IEnumerable<Attribute> attributes)
+        /// <summary>
+        /// List of advertisements
+        /// </summary>
+        public IEnumerable<Advertisement> Advertisements{get;private set;}
+
+        private Category(string name, IEnumerable<AttributeC> attributes)
         {
             Name = name;
             Attributes = attributes;
+            Advertisements = new List<Advertisement>();
         }
 
         /// <summary>
@@ -31,7 +37,7 @@
         /// <param name="name">Name of category</param>
         /// <param name="attributes">List of attributes</param>
         /// <returns>New category</returns>
-        public static Category Create(string name, IEnumerable<Attribute> attributes)
+        public static Category Create(string name, IEnumerable<AttributeC> attributes)
         {
             return new(name, attributes);
         }

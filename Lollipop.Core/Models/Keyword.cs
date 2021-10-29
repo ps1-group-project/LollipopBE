@@ -1,5 +1,6 @@
 ﻿namespace Lollipop.Core.Models
 {
+    using System.Collections.Generic;
     public class Keyword
     {
         /// <summary>
@@ -12,9 +13,15 @@
         /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// List of advertisements
+        /// </summary>
+        public IEnumerable<Advertisement> Advertisements{get;private set;}
+
         private Keyword(string name)
         {
             Name = name.ToLower();
+            Advertisements = new List<Advertisement>();
         }
 
         /// <summary>

@@ -10,6 +10,10 @@ namespace Lollipop.API
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Lollipop.Persistence.Repositories;
+    using Lollipop.Application.Repository;
+    using Lollipop.Persistence.DbContext;
+    using Microsoft.EntityFrameworkCore;
 
     public class Startup
     {
@@ -24,6 +28,8 @@ namespace Lollipop.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("lollipop_sql")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

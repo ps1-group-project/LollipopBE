@@ -1,6 +1,6 @@
 ﻿namespace Lollipop.Core.Models
 {
-    public class Attribute
+    public class AttributeC
     {
         /// <summary>
         /// Attribute identifier.
@@ -17,7 +17,7 @@
         /// </summary>
         public string Type { get; private set; }
 
-        private Attribute(string name, string type)
+        private AttributeC(string name, string type)
         {
             Name = name;
             Type = type;
@@ -29,7 +29,7 @@
         /// <param name="name">Attribute name</param>
         /// <param name="type">Attri</param>
         /// <returns></returns>
-        public static Attribute Create(string name, string type)
+        public static AttributeC Create(string name, string type)
         {
             return new(name, type);
         }
