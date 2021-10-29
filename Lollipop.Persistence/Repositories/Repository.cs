@@ -11,6 +11,11 @@ namespace Lollipop.Persistence.Repositories
 
         private DbSet<T> DbSet => _dbContext.Set<T>();
 
+        public Repository(LollipopDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public async Task<T> AddAsync(T entity)
         {
             var addedEntity = DbSet.Add(entity);
