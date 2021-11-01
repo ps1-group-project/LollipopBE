@@ -28,3 +28,4 @@ namespace Lollipop.Persistence.DbContext
 //dotnet ef migrations add --startup-project .\Lollipop.API\Lollipop.API.csproj --project .\Lollipop.Persistence\Lollipop.Persistence.csproj <nazwa migracji>
 //by uaktualnic db(jesli istnieje i jest działające połączenie)
 //dotnet ef migrations update --startup-project .\Lollipop.API\Lollipop.API.csproj --project .\Lollipop.Persistence\Lollipop.Persistence.csproj
+//Zdaje się, iż używając vs 2019 wystarczy samo wpisanie Update-Database
