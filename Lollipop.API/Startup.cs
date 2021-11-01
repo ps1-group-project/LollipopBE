@@ -14,6 +14,9 @@ namespace Lollipop.API
     using Lollipop.Application.Repository;
     using Lollipop.Persistence.DbContext;
     using Microsoft.EntityFrameworkCore;
+    using MediatR;
+    using Lollipop.Application.Keyword.Commands;
+    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -28,6 +31,8 @@ namespace Lollipop.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
+            services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("lollipop_sql")));
         }
@@ -38,6 +43,9 @@ namespace Lollipop.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                //w oknie przegl¹darki coœ w stylu localhost:PORT/swagger/index.html by dostaæ siê
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UberQuiz.API v1"));
             }
             else
             {
