@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Lollipop.API.Controllers
 {
-    [AllowAnonymous,Route("account")]
+    [AllowAnonymous]
+    [Route("account")]
     public class AccountController : Controller
     {
         [Route("google-login")]
@@ -34,10 +35,6 @@ namespace Lollipop.API.Controllers
                     claim.Value
                 });
             return Json(claims);
-        }
-        public IActionResult Index()
-        {
-            return View();
         }
     }
 }
