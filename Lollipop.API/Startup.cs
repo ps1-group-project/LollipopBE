@@ -14,9 +14,7 @@ namespace Lollipop.API
     using Lollipop.Application.Repository;
     using Lollipop.Persistence.DbContext;
     using Microsoft.EntityFrameworkCore;
-    using MediatR;
-    using Lollipop.Application.Keyword.Commands;
-    using Microsoft.OpenApi.Models;
+    using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Startup
     {
@@ -31,10 +29,26 @@ namespace Lollipop.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
-            services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("lollipop_sql")));
+
+            /*            The first thing we do is call AddAuthentication and set up a default scheme.As we are not using Identity for this example, we will use the CookieAuthenticationDefaults scheme.
+            */
+            services.AddAuthentication(options =>
+           {
+               options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+           })
+           //Next, using the AddCookie method, we need to set up a default path for where a user is redirected when they require authentication. We have set this up as /account/google-login, and we will set this up in a bit.
+           .AddCookie(options =>
+           {
+               options.LoginPath = "/account/google-login";
+           })
+           //Finally, using the AddGoogle method, we provide our client ID and client secret which was created when we set up a project in Google Cloud Platform.
+           .AddGoogle(options =>
+           {
+               options.ClientId = "996066867520-str9lnbhhit09b64oskdngt47oqcom1n.apps.googleusercontent.com";
+               options.ClientSecret = "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";
+           });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,9 +57,6 @@ namespace Lollipop.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                //w oknie przegl¹darki coœ w stylu localhost:PORT/swagger/index.html by dostaæ siê
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UberQuiz.API v1"));
             }
             else
             {
@@ -58,6 +69,7 @@ namespace Lollipop.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
