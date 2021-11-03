@@ -12,7 +12,7 @@ namespace Lollipop.API.Controllers
 {
     [AllowAnonymous]
     [Route("account")]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         [Route("google-login")]
         public IActionResult GoogleLogin()
@@ -34,7 +34,7 @@ namespace Lollipop.API.Controllers
                     claim.Type,
                     claim.Value
                 });
-            return Json(claims);
+            return (IActionResult)claims;
         }
     }
 }
