@@ -15,6 +15,9 @@ namespace Lollipop.API
     using Lollipop.Persistence.DbContext;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Authentication.Cookies;
+    using MediatR;
+    using Lollipop.Application.Keyword.Commands;
+    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -31,6 +34,8 @@ namespace Lollipop.API
             services.AddControllersWithViews();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("lollipop_sql")));
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
+            services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
 
             /*            The first thing we do is call AddAuthentication and set up a default scheme.As we are not using Identity for this example, we will use the CookieAuthenticationDefaults scheme.
             */
@@ -57,6 +62,9 @@ namespace Lollipop.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                //w oknie przegl�darki co� w stylu localhost:PORT/swagger/index.html by dosta� si�
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UberQuiz.API v1"));
             }
             else
             {
