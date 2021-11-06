@@ -14,6 +14,7 @@ namespace Lollipop.API.Controllers
     [Route("account")]
     public class AccountController : ControllerBase
     {
+        [HttpPost]
         [Route("google-login")]
         public IActionResult GoogleLogin()
         {
@@ -21,6 +22,7 @@ namespace Lollipop.API.Controllers
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
 
+        [HttpPost]
         [Route("google-response")]
         public async Task<IActionResult> GoogleResponse()
         {
