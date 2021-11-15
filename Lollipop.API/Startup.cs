@@ -19,6 +19,7 @@ namespace Lollipop.API
     using Lollipop.Application.Keyword.Commands;
     using Microsoft.OpenApi.Models;
 
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -32,6 +33,7 @@ namespace Lollipop.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("lollipop_sql")));
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
@@ -64,7 +66,7 @@ namespace Lollipop.API
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 //w oknie przegl�darki co� w stylu localhost:PORT/swagger/index.html by dosta� si�
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UberQuiz.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lollipop.API v1"));
             }
             else
             {
@@ -74,6 +76,12 @@ namespace Lollipop.API
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("https://projektz-46d76.web.app")
+                .AllowCredentials());
 
             app.UseRouting();
 

@@ -4,6 +4,9 @@
     using Microsoft.AspNetCore.Mvc;
     using MediatR;
     using Lollipop.Application.Keyword.Commands;
+    using Lollipop.Application.Keyword.Queries;
+    using System.Collections.Generic;
+    using Lollipop.Core.Models;
 
     [ApiController]
     [Route("[controller]/[action]")]
@@ -20,5 +23,13 @@
         [HttpPost]
         public async Task CreateKeyword([FromBody] CreateKeywordCommand command) =>
             await _mediator.Send(command);
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Keyword>>> GetKeywords([FromQuery] GetKeywordsQuery query) =>
+            Ok(await _mediator.Send(query));
+
+        [HttpGet]
+        public async Task<ActionResult> GetKeywordById([FromQuery] GetKeywordByIdQuery query) =>
+            Ok(await _mediator.Send(query));
     }
 }

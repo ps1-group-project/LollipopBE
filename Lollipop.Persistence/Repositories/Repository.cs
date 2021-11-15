@@ -4,6 +4,10 @@ namespace Lollipop.Persistence.Repositories
     using Microsoft.EntityFrameworkCore;
     using Lollipop.Application.Repository;
     using Lollipop.Persistence.DbContext;
+    using System.Linq;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System;
 
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -50,6 +54,33 @@ namespace Lollipop.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
 
             return _dbContext.Entry(entity).Entity;
+        }
+        public async Task<IEnumerable<T>> GetAll(
+            Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<T> query = DbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).ToListAsync();
+            }
+            else
+            {
+                return await query.ToListAsync();
+            }
         }
     }
 }
