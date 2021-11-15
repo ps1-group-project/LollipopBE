@@ -18,6 +18,7 @@ namespace Lollipop.API
     using MediatR;
     using Lollipop.Application.Keyword.Commands;
     using Microsoft.OpenApi.Models;
+    using System.Text.Json.Serialization;
 
     public class Startup
     {
@@ -32,6 +33,7 @@ namespace Lollipop.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("lollipop_sql")));
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
@@ -64,7 +66,7 @@ namespace Lollipop.API
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 //w oknie przegl�darki co� w stylu localhost:PORT/swagger/index.html by dosta� si�
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UberQuiz.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lollipop.API v1"));
             }
             else
             {
