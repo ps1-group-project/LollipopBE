@@ -18,8 +18,8 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements() =>
-            Ok(await _mediator.Send(new GetAdvertisementsQuery()));
+        public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements([FromQuery] GetAdvertisementsQuery query) =>
+            Ok(await _mediator.Send(query));
 
     }
 }

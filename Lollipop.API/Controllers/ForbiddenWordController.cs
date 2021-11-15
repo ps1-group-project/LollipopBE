@@ -18,8 +18,8 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ForbiddenWord>>> GetForbiddenWords() =>
-            Ok(await _mediator.Send(new GetForbiddenWordsQuery()));
+        public async Task<ActionResult<IEnumerable<ForbiddenWord>>> GetForbiddenWords([FromQuery] GetForbiddenWordsQuery query) =>
+            Ok(await _mediator.Send(query));
 
     }
 }

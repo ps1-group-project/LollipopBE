@@ -19,7 +19,7 @@
 
             public async Task<IEnumerable<AttributeC>> Handle(GetAttributesCQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.Get();
+                return await _repository.GetAll();
             }
         }
     }

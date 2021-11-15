@@ -20,7 +20,7 @@
 
             public async Task<IEnumerable<Category>> Handle(GetCategoriesQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.Get(null, null, "Attributes,Advertisements");
+                return await _repository.GetAll(null, null, "Attributes,Advertisements");
             }
 
         }

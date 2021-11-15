@@ -25,8 +25,8 @@
             await _mediator.Send(command);
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Keyword>>> GetKeywords() =>
-            Ok(await _mediator.Send(new GetKeywordsQuery()));
+        public async Task<ActionResult<IEnumerable<Keyword>>> GetKeywords([FromQuery] GetKeywordsQuery query) =>
+            Ok(await _mediator.Send(query));
 
         [HttpGet]
         public async Task<ActionResult> GetKeywordById([FromQuery] GetKeywordByIdQuery query) =>

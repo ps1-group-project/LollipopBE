@@ -8,7 +8,7 @@ namespace Lollipop.Application.Repository
 
     public interface IRepository<T> //where T : class
     {
-        Task<IEnumerable<T>> Get(
+        Task<IEnumerable<T>> GetAll(
             Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = "");

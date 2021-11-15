@@ -55,7 +55,7 @@ namespace Lollipop.Persistence.Repositories
 
             return _dbContext.Entry(entity).Entity;
         }
-        public async Task<IEnumerable<T>> Get(
+        public async Task<IEnumerable<T>> GetAll(
             Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = "")

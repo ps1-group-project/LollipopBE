@@ -18,8 +18,8 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAttributesC() =>
-            Ok(await _mediator.Send(new GetAttributesCQuery()));
+        public async Task<ActionResult<IEnumerable<Category>>> GetAttributesC([FromQuery] GetAttributesCQuery query) =>
+            Ok(await _mediator.Send(query));
 
     }
 }

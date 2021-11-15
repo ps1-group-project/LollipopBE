@@ -7,6 +7,7 @@
     using Lollipop.Application.Category.Commands;
     using Lollipop.Application.Category.Queries;
     using Lollipop.Core.Models;
+    using Microsoft.AspNetCore.Cors;
 
     [ApiController]
     [Route("[controller]/[action]")]
@@ -23,8 +24,8 @@
             await _mediator.Send(command);
         */
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories() =>
-            Ok(await _mediator.Send(new GetCategoriesQuery()));
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories([FromQuery] GetCategoriesQuery query) =>
+            Ok(await _mediator.Send(query));
 
         [HttpGet]
         public async Task<ActionResult> GetCategoryById([FromQuery] GetCategoryByIdQuery query) =>

@@ -18,7 +18,7 @@ namespace Lollipop.API
     using MediatR;
     using Lollipop.Application.Keyword.Commands;
     using Microsoft.OpenApi.Models;
-    using System.Text.Json.Serialization;
+
 
     public class Startup
     {
@@ -76,6 +76,12 @@ namespace Lollipop.API
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("https://projektz-46d76.web.app")
+                .AllowCredentials());
 
             app.UseRouting();
 
