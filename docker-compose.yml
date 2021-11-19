@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - 3000:80
+    depends_on:
+      - sql_lollipop
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+  sql_lollipop:
+    volumes:
+      - lollipop_data:/var/opt/mssql/data
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "zaq1@WSXqwerty"
+      ACCEPT_EULA: "Y"
+volumes:
+  lollipop_data:
+
+#docker-compose up -d
