@@ -7,14 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Serialization;
+using System.Web.Helpers;
 
 namespace Lollipop.API.Controllers
 {
     [AllowAnonymous]
     [Route("account")]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
-        [HttpPost]
+
         [Route("google-login")]
         public IActionResult GoogleLogin()
         {
@@ -22,7 +24,6 @@ namespace Lollipop.API.Controllers
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
 
-        [HttpPost]
         [Route("google-response")]
         public async Task<IActionResult> GoogleResponse()
         {
@@ -36,7 +37,8 @@ namespace Lollipop.API.Controllers
                     claim.Type,
                     claim.Value
                 });
-            return (IActionResult)claims;
+
+            return View("Index");
         }
     }
 }

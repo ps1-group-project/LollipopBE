@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.Tests", "Lollipop.Tests\Lollipop.Tests.csproj", "{53C236F5-7E2F-4BF4-B6E2-DDAE9AD14029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lollipop.API", "Lollipop.API\Lollipop.API.csproj", "{982CC908-8ECA-4271-BF00-DADB69CB24B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.API", "Lollipop.API\Lollipop.API.csproj", "{982CC908-8ECA-4271-BF00-DADB69CB24B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
