@@ -31,7 +31,7 @@ namespace Lollipop.API.Controllers
         [Route("google-response")]
         public async Task<IActionResult> GoogleResponse()
         {
-            string redirectURL = _config.GetValue<string>("FrontEndAddress");
+            string redirectURL = _config.GetValue<string>("FrontEndAddressMain");
             return Redirect(redirectURL);
         }
 
@@ -60,7 +60,8 @@ namespace Lollipop.API.Controllers
             //if exists and it's connected to the specific user
 
             //set the new password for the user
-            string redirectURL = _config.GetValue<string>("FrontEndAddress:main");
+            string redirectURL = _config.GetValue<string>("FrontEndAddressMain");
+
             return Redirect(redirectURL);
         }
     }
