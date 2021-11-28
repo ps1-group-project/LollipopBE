@@ -32,30 +32,31 @@ namespace Lollipop.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+          //Next, using the AddCookie method, we need to set up a default path for where a user is redirected when they require authentication. We have set this up as /account/google-login, and we will set this up in a bit.
+          .AddCookie(options =>
+          {
+              options.LoginPath = "/account/google-login";
+          })
+          //Finally, using the AddGoogle method, we provide our client ID and client secret which was created when we set up a project in Google Cloud Platform.
+          .AddGoogle(options =>
+          {
+              options.ClientId = "996066867520-1npd5tcf3hqljfv8jj5spri40srqm2ro.apps.googleusercontent.com";
+              options.ClientSecret = "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";
+          });
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("lollipop_sql")));
+            services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sql_lollipop")));
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
 
             /*            The first thing we do is call AddAuthentication and set up a default scheme.As we are not using Identity for this example, we will use the CookieAuthenticationDefaults scheme.
             */
-            services.AddAuthentication(options =>
-           {
-               options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-           })
-           //Next, using the AddCookie method, we need to set up a default path for where a user is redirected when they require authentication. We have set this up as /account/google-login, and we will set this up in a bit.
-           .AddCookie(options =>
-           {
-               options.LoginPath = "/account/google-login";
-           })
-           //Finally, using the AddGoogle method, we provide our client ID and client secret which was created when we set up a project in Google Cloud Platform.
-           .AddGoogle(options =>
-           {
-               options.ClientId = "996066867520-str9lnbhhit09b64oskdngt47oqcom1n.apps.googleusercontent.com";
-               options.ClientSecret = "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";
-           });
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
