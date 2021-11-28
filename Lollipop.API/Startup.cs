@@ -81,7 +81,7 @@ namespace Lollipop.API
             app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .WithOrigins("https://projektz-46d76.web.app")
+                .WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000")
                 .AllowCredentials());
 
             app.UseRouting();
