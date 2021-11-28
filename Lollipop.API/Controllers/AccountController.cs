@@ -39,12 +39,16 @@ namespace Lollipop.API.Controllers
         [HttpPut]
         public async Task<IActionResult> PasswordRecovery(string email){
             //we have to generate secret token
-            string secretToken = "dsa";
+            string secretToken = "superSecretTokenHardToBreak";
 
             //then send it to the user's email provider
+            //link that will be like this:
+            string passRecFormURL = _config.GetValue<string>("FrontEndAddress:passRecForm");
+            string link = passRecFormURL + "?secretToken="+secretToken+"&email="+email;
+
 
             //and return Rediret(Password recovery was sent to the user's email provider');
-            string redirectURL = _config.GetValue<string>("FrontEndAddress:main");
+            string redirectURL = _config.GetValue<string>("FrontEndAddress:passRecSent");
             return Redirect(redirectURL);
         }
         [Route("password-change")]
