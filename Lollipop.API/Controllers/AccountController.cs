@@ -34,5 +34,30 @@ namespace Lollipop.API.Controllers
             string redirectURL = _config.GetValue<string>("FrontEndAddress");
             return Redirect(redirectURL);
         }
+
+        [Route("password-recovery")]
+        [HttpPut]
+        public async Task<IActionResult> PasswordRecovery(string email){
+            //we have to generate secret token
+            string secretToken = "dsa";
+
+            //then send it to the user's email provider
+
+            //and return Rediret(Password recovery was sent to the user's email provider');
+            string redirectURL = _config.GetValue<string>("FrontEndAddress:main");
+            return Redirect(redirectURL);
+        }
+        [Route("password-change")]
+        [HttpPut]
+        public async Task<IActionResult> PasswordChange(string secretToken, string newPassword){
+
+            //search database for the secretToken
+
+            //if exists and it's connected to the specific user
+
+            //set the new password for the user
+            string redirectURL = _config.GetValue<string>("FrontEndAddress:main");
+            return Redirect(redirectURL);
+        }
     }
 }
