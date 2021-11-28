@@ -9,14 +9,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using System.Web.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace Lollipop.API.Controllers
 {
     [AllowAnonymous]
     [Route("account")]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
-
+        private readonly IConfiguration _config;
+        public AccountController(IConfiguration config){
+            _config = config;
+        }
         [Route("google-login")]
         public IActionResult GoogleLogin()
         {
@@ -38,7 +42,8 @@ namespace Lollipop.API.Controllers
                     claim.Value
                 });
 
-            return View("Index");
+            string redirectURL = _config.GetValue<string>("FrontEndAddress");
+            return Redirect(redirectURL);
         }
     }
 }
