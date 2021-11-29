@@ -47,12 +47,9 @@ namespace Lollipop.API.Controllers
             //then send it to the user's email provider
             //link that will be like this:
             string passRecFormURL = _config.GetValue<string>("FrontEndAddress:passRecForm");
-            string link = passRecFormURL + "?secretToken="+secretToken+"&email="+email;
+            string link = passRecFormURL + "?secretToken="+secretToken;
 
-
-            //and return Rediret(Password recovery was sent to the user's email provider');
-            string redirectURL = _config.GetValue<string>("FrontEndAddress:passRecSent");
-            return Redirect(redirectURL);
+            return Ok();
         }
 
         [HttpPut]
@@ -64,23 +61,23 @@ namespace Lollipop.API.Controllers
             //if exists and it's connected to the specific user
 
             //set the new password for the user
-            string redirectURL = _config.GetValue<string>("FrontEndAddressMain");
+            string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
 
             return Redirect(redirectURL);
         }
 
         [Route("new")]
         [HttpPost]
-        public async Task<ActionResult> CreateUser(string email, string password, string firstName, string lastName)
+        public async Task<OkResult> CreateUser(string email, string password, string firstName, string lastName)
         {
-
+            return Ok();
         }
 
         [Route("sign-in")]
         [HttpPost]
-        public async Task<IActionResult> SignIn(string email,string password )
+        public async Task<OkResult> SignIn(string email,string password )
         {
-
+            return Ok();
         }
     }
 }
