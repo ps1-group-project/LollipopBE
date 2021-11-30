@@ -8,6 +8,7 @@ namespace Lollipop.API
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.HttpsPolicy;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace Lollipop.API
     using Lollipop.Application.Keyword.Commands;
     using Microsoft.OpenApi.Models;
     using Microsoft.AspNetCore.Http;
+    using Lollipop.Core.Models;
 
 
     public class Startup
@@ -55,6 +57,7 @@ namespace Lollipop.API
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sql_lollipop")));
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<LollipopDbContext>();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
