@@ -26,12 +26,17 @@ namespace Lollipop.API.Controllers
             _config = config;
             _mailService = mailService;
         }
+        //swagger doesn't like it to not have here http method
+        //if we want the authorization works, we have to delte those
+        [HttpGet]
         public IActionResult GoogleLogin()
         {
             var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
-
+        //swagger doesn't like it to not have here http method
+        //if we wawnt to authorization work, we have to delete those
+        [HttpPost]
         public async Task<IActionResult> GoogleResponse()
         {
             string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
@@ -52,8 +57,8 @@ namespace Lollipop.API.Controllers
             {
                 var mail = new EmailRequest();
                 mail.toEmail = email;
-                mail.Body = "Link do odzyskania hasła: "+link;
-                mail.Subject = "Mail from Lollipop";
+                mail.Body = "Link for password reset: "+link;
+                mail.Subject = "Password reset request";
                 await _mailService.SendEmailAsync(mail);
                 return Ok();
             }
