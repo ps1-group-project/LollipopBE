@@ -39,7 +39,21 @@ namespace Lollipop.API.Controllers
         [HttpPost]
         public async Task<IActionResult> GoogleResponse()
         {
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            //generate token from claims
+            var claims = result.Principal.Identities
+                .FirstOrDefault().Claims.Select(claim => new
+                {
+                    claim.Issuer,
+                    claim.OriginalIssuer,
+                    claim.Type,
+                    claim.Value
+                });
+
             string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
+
+            //return ok with access tokens and refresh token
             return Redirect(redirectURL);
         }
 
