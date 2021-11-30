@@ -20,6 +20,8 @@ namespace Lollipop.API.Controllers
             this.userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
             this.tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
+
+        //for refreshing access tokens
         [HttpPost]
         [Route("refresh")]
         public IActionResult Refresh(TokenApiModel tokenApiModel)
@@ -50,6 +52,8 @@ namespace Lollipop.API.Controllers
                 refreshToken = newRefreshToken
             });
         }
+
+        //it's for signing out, because to log out user have to be logged in
         [HttpPost, Authorize]
         [Route("revoke")]
         public IActionResult Revoke()
