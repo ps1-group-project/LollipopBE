@@ -1,3 +1,5 @@
+using Lollipop.Persistence.EmailSender;
+
 namespace Lollipop.API
 {
     using System;
@@ -13,11 +15,13 @@ namespace Lollipop.API
     using Lollipop.Persistence.Repositories;
     using Lollipop.Application.Repository;
     using Lollipop.Persistence.DbContext;
+    using Lollipop.Persistence.EmailSender;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using MediatR;
     using Lollipop.Application.Keyword.Commands;
     using Microsoft.OpenApi.Models;
+    using Microsoft.AspNetCore.Http;
 
 
     public class Startup
@@ -53,6 +57,8 @@ namespace Lollipop.API
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sql_lollipop")));
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailService, MailService>();
 
             /*            The first thing we do is call AddAuthentication and set up a default scheme.As we are not using Identity for this example, we will use the CookieAuthenticationDefaults scheme.
             */

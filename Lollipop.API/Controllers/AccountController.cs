@@ -9,7 +9,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using System.Web.Helpers;
+using MailKit;
 using Microsoft.Extensions.Configuration;
+using Lollipop.Persistence.EmailSender;
+using IMailService = Lollipop.Persistence.EmailSender.IMailService;
 
 namespace Lollipop.API.Controllers
 {
@@ -18,8 +21,10 @@ namespace Lollipop.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public AccountController(IConfiguration config){
+        private readonly IMailService _mailService;
+        public AccountController(IConfiguration config, IMailService mailService){
             _config = config;
+            _mailService = mailService;
         }
         public IActionResult GoogleLogin()
         {
@@ -43,8 +48,20 @@ namespace Lollipop.API.Controllers
             //link that will be like this:
             string passRecFormURL = _config.GetValue<string>("FrontEndAddress:passRecForm");
             string link = passRecFormURL + "?secretToken="+secretToken;
+            try
+            {
+                var mail = new EmailRequest();
+                mail.toEmail = email;
+                mail.Body = "Link do odzyskania hasła: "+link;
+                mail.Subject = "Mail from Lollipop";
+                await _mailService.SendEmailAsync(mail);
+                return Ok();
+            }
+            catch
+            {
+                throw;
+            }
 
-            return Ok();
         }
 
         [HttpPut]
