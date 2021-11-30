@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lollipop.Persistence.TokenService
 {
-    interface ITokenService
+    public interface ITokenService
     {
         string GenerateAccessToken(IEnumerable<Claim> claims);
         string GenerateRefreshToken();

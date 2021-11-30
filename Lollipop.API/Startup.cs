@@ -24,6 +24,7 @@ namespace Lollipop.API
     using Microsoft.OpenApi.Models;
     using Microsoft.AspNetCore.Http;
     using Lollipop.Core.Models;
+    using Lollipop.Persistence.TokenService;
 
 
     public class Startup
@@ -62,10 +63,11 @@ namespace Lollipop.API
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IMailService, MailService>();
+            services.AddTransient<ITokenService, TokenService>();
 
             /*            The first thing we do is call AddAuthentication and set up a default scheme.As we are not using Identity for this example, we will use the CookieAuthenticationDefaults scheme.
             */
-           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
