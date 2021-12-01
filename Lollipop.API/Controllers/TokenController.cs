@@ -23,15 +23,14 @@ namespace Lollipop.API.Controllers
 
         //for refreshing access tokens
         [HttpPost]
-        [Route("refresh")]
-        public IActionResult Refresh(TokenApiModel tokenApiModel)
+        public IActionResult Refresh(TokenApi tokens)
         {
-            if (tokenApiModel is null)
+            if (tokens is null)
             {
                 return BadRequest("Invalid client request");
             }
-            string accessToken = tokenApiModel.AccessToken;
-            string refreshToken = tokenApiModel.RefreshToken;
+            string accessToken = tokens.AccessToken;
+            string refreshToken = tokens.RefreshToken;
             var principal = tokenService.GetPrincipalFromExpiredToken(accessToken);
             var username = principal.Identity.Name; //this is mapped to the Name claim by default
 
@@ -55,7 +54,6 @@ namespace Lollipop.API.Controllers
 
         //it's for signing out, because to log out user have to be logged in
         [HttpPost, Authorize]
-        [Route("revoke")]
         public IActionResult Revoke()
         {
             var username = User.Identity.Name;

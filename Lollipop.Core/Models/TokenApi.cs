@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lollipop.Core.Models
 {
-    public class TokenApiModel
+    public class TokenApi
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }

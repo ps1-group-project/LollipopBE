@@ -14,6 +14,14 @@ namespace Lollipop.Persistence.EmailSender
         {
             _mailSettings = mailSettings.Value;
         }
+        public EmailRequest GenerateRecoveryEmail(string toEmail, string link)
+        {
+            var mail = new EmailRequest();
+            mail.toEmail = toEmail;
+            mail.Body = "Link for password reset: " + link;
+            mail.Subject = "Password reset request";
+            return mail;
+        }
         public async Task SendEmailAsync(EmailRequest mailRequest)
         {
             var email = new MimeMessage();
@@ -21,22 +29,6 @@ namespace Lollipop.Persistence.EmailSender
             email.To.Add(MailboxAddress.Parse(mailRequest.toEmail));
             email.Subject = mailRequest.Subject;
             var builder = new BodyBuilder();
-            if (mailRequest.Attachments != null)
-            {
-                byte[] fileBytes;
-                foreach (var file in mailRequest.Attachments)
-                {
-                    if (file.Length > 0)
-                    {
-                        using (var ms = new MemoryStream())
-                        {
-                            file.CopyTo(ms);
-                            fileBytes = ms.ToArray();
-                        }
-                        builder.Attachments.Add(file.FileName, fileBytes, ContentType.Parse(file.ContentType));
-                    }
-                }
-            }
             builder.HtmlBody = mailRequest.Body;
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();

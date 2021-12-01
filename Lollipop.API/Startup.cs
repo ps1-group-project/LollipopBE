@@ -1,4 +1,3 @@
-using Lollipop.Persistence.EmailSender;
 
 namespace Lollipop.API
 {

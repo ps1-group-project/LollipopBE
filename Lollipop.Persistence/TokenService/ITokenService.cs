@@ -9,12 +9,23 @@ namespace Lollipop.Persistence.TokenService
 {
     public interface ITokenService
     {
-        //for generating access Token, we do it from user's claims
+        /// <summary>
+        /// for generating access Token, we do it from user's claims
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <returns></returns>
         string GenerateAccessToken(IEnumerable<Claim> claims);
-        //for generating Refresh Token
+        /// <summary>
+        /// for generating Refresh Token
+        /// </summary>
+        /// <returns></returns>
         string GenerateRefreshToken();
-        //for retrieving information from expired token, it's used for
-        //genereating new token after being outdated
+        /// <summary>
+        /// for retrieving information from expired token, it's used for
+        ///genereating new token after being outdated
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
     }
 }

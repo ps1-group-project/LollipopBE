@@ -5,5 +5,6 @@ namespace Lollipop.Persistence.EmailSender
     public interface IMailService
     {
         Task SendEmailAsync(EmailRequest mailRequest);
+        public EmailRequest GenerateRecoveryEmail(string toEmail, string link);
     }
 }
