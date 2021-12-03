@@ -21,6 +21,8 @@ namespace Lollipop.API.Controllers
         public AccountController(IConfiguration config){
             _config = config;
         }
+
+        [HttpPost]
         [Route("google-login")]
         public IActionResult GoogleLogin()
         {
@@ -28,6 +30,7 @@ namespace Lollipop.API.Controllers
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
 
+        [HttpGet]
         [Route("google-response")]
         public async Task<IActionResult> GoogleResponse()
         {
@@ -35,8 +38,8 @@ namespace Lollipop.API.Controllers
             return Redirect(redirectURL);
         }
 
-        [Route("password-recovery")]
         [HttpPut]
+        [Route("password-recovery")]
         public async Task<IActionResult> PasswordRecovery(string email){
             //we have to generate secret token
             string secretToken = "superSecretTokenHardToBreak";
@@ -51,8 +54,9 @@ namespace Lollipop.API.Controllers
             string redirectURL = _config.GetValue<string>("FrontEndAddress:passRecSent");
             return Redirect(redirectURL);
         }
-        [Route("password-change")]
+
         [HttpPut]
+        [Route("password-change")]
         public async Task<IActionResult> PasswordChange(string secretToken, string newPassword){
 
             //search database for the secretToken
