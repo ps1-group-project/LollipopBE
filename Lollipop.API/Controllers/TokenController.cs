@@ -13,11 +13,11 @@ namespace Lollipop.API.Controllers
     [Route("[controller]/[action]")]
     public class TokenController : ControllerBase
     {
-        readonly LollipopDbContext userContext;
+        readonly LollipopDbContext dbContext;
         readonly ITokenService tokenService;
-        public TokenController(LollipopDbContext userContext, ITokenService tokenService)
+        public TokenController(LollipopDbContext dbContext, ITokenService tokenService)
         {
-            this.userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
+            this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             this.tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
 
@@ -34,9 +34,8 @@ namespace Lollipop.API.Controllers
             var principal = tokenService.GetPrincipalFromExpiredToken(accessToken);
             var username = principal.Identity.Name; //this is mapped to the Name claim by default
 
-            var user = new AppUser();
-            //at below code, we have to find user from our database
-            //var user = userContext.LoginModels.SingleOrDefault(u => u.UserName == username);
+
+            var user = dbContext.Users.SingleOrDefault(u => u.UserName == username);
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
                 return BadRequest("Invalid client request");
@@ -44,7 +43,7 @@ namespace Lollipop.API.Controllers
             var newAccessToken = tokenService.GenerateAccessToken(principal.Claims);
             var newRefreshToken = tokenService.GenerateRefreshToken();
             user.RefreshToken = newRefreshToken;
-            userContext.SaveChanges();
+            dbContext.SaveChanges();
             return new ObjectResult(new
             {
                 accessToken = newAccessToken,
@@ -58,11 +57,10 @@ namespace Lollipop.API.Controllers
         {
             var username = User.Identity.Name;
 
-            var user = new AppUser();
-            //var user = userContext.LoginModels.SingleOrDefault(u => u.UserName == username);
+            var user = dbContext.Users.SingleOrDefault(u => u.UserName == username);
             if (user == null) return BadRequest();
             user.RefreshToken = null;
-            userContext.SaveChanges();
+            dbContext.SaveChanges();
             return NoContent();
         }
     }

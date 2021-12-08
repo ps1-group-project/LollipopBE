@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lollipop.Persistence.Migrations
 {
     [DbContext(typeof(LollipopDbContext))]
-    [Migration("20211202081340_tablesAndUsers")]
-    partial class tablesAndUsers
+    [Migration("20211202152801_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -11,6 +11,9 @@ using Newtonsoft.Json.Serialization;
 using System.Web.Helpers;
 using Microsoft.Extensions.Configuration;
 using Lollipop.Persistence.EmailSender;
+using Lollipop.Persistence.DbContext;
+using Lollipop.Core.Models;
+using Newtonsoft.Json;
 
 namespace Lollipop.API.Controllers
 {
@@ -20,7 +23,9 @@ namespace Lollipop.API.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IMailService _mailService;
-        public AccountController(IConfiguration config, IMailService mailService){
+        private readonly LollipopDbContext _dbContext;
+        public AccountController(IConfiguration config, IMailService mailService, LollipopDbContext context){
+            _dbContext = context;
             _config = config;
             _mailService = mailService;
         }
