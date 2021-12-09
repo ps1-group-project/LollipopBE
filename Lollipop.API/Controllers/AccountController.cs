@@ -14,6 +14,8 @@ using Lollipop.Persistence.EmailSender;
 using Lollipop.Persistence.DbContext;
 using Lollipop.Core.Models;
 using Newtonsoft.Json;
+using Lollipop.Persistence.TokenService;
+using Microsoft.AspNetCore.Identity;
 
 namespace Lollipop.API.Controllers
 {
@@ -24,10 +26,21 @@ namespace Lollipop.API.Controllers
         private readonly IConfiguration _config;
         private readonly IMailService _mailService;
         private readonly LollipopDbContext _dbContext;
-        public AccountController(IConfiguration config, IMailService mailService, LollipopDbContext context){
+        private readonly ITokenService _tokenService;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        public AccountController(IConfiguration config,
+            IMailService mailService,
+            LollipopDbContext context,
+            ITokenService tokenService,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager){
             _dbContext = context;
             _config = config;
             _mailService = mailService;
+            _tokenService = tokenService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         //swagger doesn't like it to not have here http method
         //if we want the authorization works, we have to delte those
@@ -54,10 +67,12 @@ namespace Lollipop.API.Controllers
                     claim.Value
                 });
 
-            string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
-
-            //return ok with access tokens and refresh token
-            return Redirect(redirectURL);
+            var _accesstToken = _tokenService.GenerateAccessToken((IEnumerable<System.Security.Claims.Claim>)claims);
+            var _refreshToken = _tokenService.GenerateRefreshToken();
+            return Ok(new {
+                accessToken = _accesstToken,
+                refreshToken = _refreshToken
+            });
         }
 
         [HttpPut]
@@ -100,6 +115,9 @@ namespace Lollipop.API.Controllers
         [HttpPost]
         public async Task<OkResult> New(string email, string password, string firstName, string lastName)
         {
+            var user = new AppUser { Email = email, firstName = firstName, lastName = lastName };
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
             return Ok();
         }
 
@@ -107,6 +125,12 @@ namespace Lollipop.API.Controllers
         public async Task<OkResult> SignIn(string email,string password )
         {
             return Ok();
+            /*var user = _dbContext.Users.
+            return Ok(new
+            {
+                accessToken = _accesstToken,
+                refreshToken = _refreshToken
+            });*/
         }
     }
 }
