@@ -178,9 +178,9 @@ namespace Lollipop.API.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, password, true, false);
                 if (result.Succeeded)
                 {
-                    var claims = _userManager.GetClaimsAsync(user);
+                    var claims = await _userManager.GetClaimsAsync(user);
 
-                    var _accesstToken = _tokenService.GenerateAccessToken((IEnumerable<System.Security.Claims.Claim>)claims);
+                    var _accesstToken = _tokenService.GenerateAccessToken(claims);
                     var _refreshToken = _tokenService.GenerateRefreshToken();
                     return Ok(new
                     {
