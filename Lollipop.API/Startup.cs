@@ -59,6 +59,7 @@ namespace Lollipop.API
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("local_sql_lollipop")));
             services.AddIdentity<AppUser, IdentityRole>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
                 //other options also go here
             }).AddEntityFrameworkStores<LollipopDbContext>().AddDefaultTokenProviders();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
