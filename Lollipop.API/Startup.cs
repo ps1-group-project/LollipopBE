@@ -1,3 +1,4 @@
+
 namespace Lollipop.API
 {
     using System;
@@ -6,6 +7,7 @@ namespace Lollipop.API
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.HttpsPolicy;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -13,11 +15,15 @@ namespace Lollipop.API
     using Lollipop.Persistence.Repositories;
     using Lollipop.Application.Repository;
     using Lollipop.Persistence.DbContext;
+    using Lollipop.Persistence.EmailSender;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using MediatR;
     using Lollipop.Application.Keyword.Commands;
     using Microsoft.OpenApi.Models;
+    using Microsoft.AspNetCore.Http;
+    using Lollipop.Core.Models;
+    using Lollipop.Persistence.TokenService;
 
 
     public class Startup
@@ -50,13 +56,21 @@ namespace Lollipop.API
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sql_lollipop")));
+            services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("local_sql_lollipop")));
+            services.AddIdentity<AppUser, IdentityRole>(options => {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+                //other options also go here
+            }).AddEntityFrameworkStores<LollipopDbContext>().AddDefaultTokenProviders();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<ITokenService, TokenService>();
 
             /*            The first thing we do is call AddAuthentication and set up a default scheme.As we are not using Identity for this example, we will use the CookieAuthenticationDefaults scheme.
             */
-           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
