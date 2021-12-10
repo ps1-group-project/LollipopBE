@@ -16,6 +16,9 @@ using Lollipop.Core.Models;
 using Newtonsoft.Json;
 using Lollipop.Persistence.TokenService;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using System.Security.Claims;
 
 namespace Lollipop.API.Controllers
 {
@@ -78,11 +81,10 @@ namespace Lollipop.API.Controllers
         [HttpPut]
         [Route("password-recovery")]
         public async Task<IActionResult> PasswordRecovery(string email){
-            //we have to generate secret token
-            string secretToken = "superSecretTokenHardToBreak";
 
-            //then send it to the user's email provider
-            //link that will be like this:
+            var user = await _userManager.FindByEmailAsync(email);
+            string secretToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
             string passRecFormURL = _config.GetValue<string>("FrontEndAddress:passRecForm");
             string link = passRecFormURL + "?secretToken="+secretToken;
             try
@@ -94,43 +96,100 @@ namespace Lollipop.API.Controllers
             catch
             {
                 throw;
+                return StatusCode(500);
             }
 
         }
 
         [HttpPut]
+<<<<<<< HEAD
         [Route("password-change")]
         public async Task<IActionResult> PasswordChange(string secretToken, string newPassword){
 
             //search database for the secretToken
+=======
+        public async Task<IActionResult> PasswordChange(string email,string secretToken, string password){
+>>>>>>> 933862f (Creating user works)
 
-            //if exists and it's connected to the specific user
-
-            //set the new password for the user
-            string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
-
-            return Redirect(redirectURL);
-        }
-
-        [HttpPost]
-        public async Task<OkResult> New(string email, string password, string firstName, string lastName)
-        {
-            var user = new AppUser { Email = email, firstName = firstName, lastName = lastName };
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
-            return Ok();
-        }
-
-        [HttpPost]
-        public async Task<OkResult> SignIn(string email,string password )
-        {
-            return Ok();
-            /*var user = _dbContext.Users.
-            return Ok(new
+            var user = await  _userManager.FindByEmailAsync(email);
+            if(user!= null)
             {
-                accessToken = _accesstToken,
-                refreshToken = _refreshToken
-            });*/
+                try
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, secretToken, password);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user,isPersistent: true);
+                        var claims = _userManager.GetClaimsAsync(user);
+
+                        var _accesstToken = _tokenService.GenerateAccessToken((IEnumerable<System.Security.Claims.Claim>)claims);
+                        var _refreshToken = _tokenService.GenerateRefreshToken();
+                        return Ok(new
+                        {
+                            accessToken = _accesstToken,
+                            refreshToken = _refreshToken
+                        });
+                    }
+                    return StatusCode(500);
+                }
+                catch
+                {
+                    return StatusCode(500);
+                }
+            }
+            return StatusCode(500);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> New(string email, string password, string firstName, string lastName, string userName)
+        {
+            var user = new AppUser { Email = email, firstName = firstName, lastName = lastName,UserName = userName };
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                var code = _userManager.GenerateEmailConfirmationTokenAsync(user);
+                //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code).Result);
+                string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
+                var mail = _mailService.GenerateRegistrationEmail(email, redirectURL);
+                await _mailService.SendEmailAsync(mail);
+                await _signInManager.SignInAsync(user, isPersistent: true);
+
+                var claims = _userManager.GetClaimsAsync(user);
+
+                var _accesstToken = _tokenService.GenerateAccessToken((IEnumerable<System.Security.Claims.Claim>)claims);
+                var _refreshToken = _tokenService.GenerateRefreshToken();
+                return Ok(new
+                {
+                    accessToken = _accesstToken,
+                    refreshToken = _refreshToken
+                });
+            }
+            return StatusCode(500, result.Errors);
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn(string email,string password )
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if(user!= null)
+            {
+                var result = await _signInManager.PasswordSignInAsync(user, password, true, false);
+                if (result.Succeeded)
+                {
+                    var claims = _userManager.GetClaimsAsync(user);
+
+                    var _accesstToken = _tokenService.GenerateAccessToken((IEnumerable<System.Security.Claims.Claim>)claims);
+                    var _refreshToken = _tokenService.GenerateRefreshToken();
+                    return Ok(new
+                    {
+                        accessToken = _accesstToken,
+                        refreshToken = _refreshToken
+                    });
+                }
+            }
+            return StatusCode(500);
         }
     }
 }

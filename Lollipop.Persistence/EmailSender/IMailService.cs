@@ -6,5 +6,6 @@ namespace Lollipop.Persistence.EmailSender
     {
         Task SendEmailAsync(EmailRequest mailRequest);
         public EmailRequest GenerateRecoveryEmail(string toEmail, string link);
+        public EmailRequest GenerateRegistrationEmail(string toEmail, string link);
     }
 }

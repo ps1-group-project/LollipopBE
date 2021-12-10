@@ -22,6 +22,14 @@ namespace Lollipop.Persistence.EmailSender
             mail.Subject = "Password reset request";
             return mail;
         }
+        public EmailRequest GenerateRegistrationEmail(string toEmail, string link)
+        {
+            var mail = new EmailRequest();
+            mail.toEmail = toEmail;
+            mail.Body = "Link to confirm registration: " + link;
+            mail.Subject = "Lollipop Complete registration process";
+            return mail;
+        }
         public async Task SendEmailAsync(EmailRequest mailRequest)
         {
             var email = new MimeMessage();
