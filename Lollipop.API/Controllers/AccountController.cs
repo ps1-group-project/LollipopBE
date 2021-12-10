@@ -148,16 +148,11 @@ namespace Lollipop.API.Controllers
             var result = await _userManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
-                var code = _userManager.GenerateEmailConfirmationTokenAsync(user);
-                //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code).Result);
-                string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
-                var mail = _mailService.GenerateRegistrationEmail(email, redirectURL);
-                await _mailService.SendEmailAsync(mail);
                 await _signInManager.SignInAsync(user, isPersistent: true);
 
-                var claims = _userManager.GetClaimsAsync(user);
+                var claims = await _userManager.GetClaimsAsync(user);
 
-                var _accesstToken = _tokenService.GenerateAccessToken((IEnumerable<System.Security.Claims.Claim>)claims);
+                var _accesstToken = _tokenService.GenerateAccessToken(claims);
                 var _refreshToken = _tokenService.GenerateRefreshToken();
                 return Ok(new
                 {
