@@ -29,5 +29,10 @@
         [HttpPost]
         public async Task CreateAdvertisement([FromBody] CreateAdvertisementCommand command) =>
              await _mediator.Send(command);
+
+        [HttpDelete]
+        public async Task DeleteAdvertisement([FromBody] DeleteAdvertisementCommand command) =>
+            await _mediator.Send(command);
+
     }
 }
