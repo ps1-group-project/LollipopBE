@@ -22,6 +22,10 @@
         public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements([FromQuery] GetAdvertisementsQuery query) =>
             Ok(await _mediator.Send(query));
 
+        [HttpGet]
+        public async Task<ActionResult<Advertisement>> GetAdvertisementById([FromBody] GetAdvertisementByIdQuery query) =>
+            Ok(await _mediator.Send(query));
+
         [HttpPost]
         public async Task CreateAdvertisement([FromBody] CreateAdvertisementCommand command) =>
              await _mediator.Send(command);
