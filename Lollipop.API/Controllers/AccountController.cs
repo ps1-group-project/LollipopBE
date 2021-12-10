@@ -183,8 +183,15 @@ namespace Lollipop.API.Controllers
                         refreshToken = _refreshToken
                     });
                 }
+                return StatusCode(500,new {
+                code = "SignInFailed",
+                message = "Wrong password"
+                });
             }
-            return StatusCode(500);
+            return StatusCode(500,new { 
+            code = "SignInFailed",
+            message = "Wrong email"
+            });
         }
     }
 }
