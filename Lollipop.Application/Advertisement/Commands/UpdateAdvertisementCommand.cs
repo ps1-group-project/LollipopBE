@@ -10,7 +10,7 @@
     using Lollipop.Core.Models;
     using Lollipop.Application.Repository;
 
-    public class UpdateAdvertisementCommand
+    public class UpdateAdvertisementCommand : IRequest<int>
     {
         //Command
         public record Command(int Id, string title, string content, IEnumerable<Category> categories, IEnumerable<Keyword> keywords) : IRequest<int>;

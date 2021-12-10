@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using Lollipop.Core.Models;
     using System.Collections.Generic;
-    public class CreateAdvertisementCommand
+    public class CreateAdvertisementCommand : IRequest<int>
     {
         //Command
         public record Command(int userId, string title, string content, IEnumerable<Category> categories, IEnumerable<Keyword> keywords) : IRequest<int>;

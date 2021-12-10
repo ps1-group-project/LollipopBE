@@ -9,7 +9,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Lollipop.Core.Models;
-    public class DeleteAdvertisementCommand
+    public class DeleteAdvertisementCommand : IRequest<int>
     {
         //Command
         public record Command(int Id) : IRequest<int>;
