@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lollipop.Persistence.Migrations
 {
     [DbContext(typeof(LollipopDbContext))]
-    [Migration("20211130113127_AppUser")]
-    partial class AppUser
+    [Migration("20211202081340_tablesAndUsers")]
+    partial class tablesAndUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,6 +90,12 @@ namespace Lollipop.Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -101,6 +107,9 @@ namespace Lollipop.Persistence.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("firstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("lastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
