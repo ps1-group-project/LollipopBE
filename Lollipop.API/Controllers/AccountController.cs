@@ -83,8 +83,15 @@ namespace Lollipop.API.Controllers
         public async Task<IActionResult> PasswordRecovery(string email){
 
             var user = await _userManager.FindByEmailAsync(email);
+            if(user == null)
+            {
+                return StatusCode(500, new
+                {
+                    code = "Wrong email",
+                    message = "Given email doesn't exist in database"
+                });
+            }
             string secretToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-
             string passRecFormURL = _config.GetValue<string>("FrontEndAddress:passRecForm");
             string link = passRecFormURL + "?secretToken="+secretToken;
             try
@@ -95,8 +102,11 @@ namespace Lollipop.API.Controllers
             }
             catch
             {
-                throw;
-                return StatusCode(500);
+                return StatusCode(500, new
+                {
+                    code = "ServerError",
+                    message = "Sending email operation failed"
+                });
             }
 
         }
@@ -114,15 +124,13 @@ namespace Lollipop.API.Controllers
             var user = await  _userManager.FindByEmailAsync(email);
             if(user!= null)
             {
-                try
-                {
                     var result = await _userManager.ResetPasswordAsync(user, secretToken, password);
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user,isPersistent: true);
-                        var claims = _userManager.GetClaimsAsync(user);
+                        var claims = await _userManager.GetClaimsAsync(user);
 
-                        var _accesstToken = _tokenService.GenerateAccessToken((IEnumerable<System.Security.Claims.Claim>)claims);
+                        var _accesstToken = _tokenService.GenerateAccessToken(claims);
                         var _refreshToken = _tokenService.GenerateRefreshToken();
                         return Ok(new
                         {
@@ -130,14 +138,16 @@ namespace Lollipop.API.Controllers
                             refreshToken = _refreshToken
                         });
                     }
-                    return StatusCode(500);
-                }
-                catch
-                {
-                    return StatusCode(500);
-                }
+                    return StatusCode(500, new { 
+                    code = "ServerError",
+                    message = "Changing password operation failed"
+                    });
             }
-            return StatusCode(500);
+            return StatusCode(500, new
+            {
+                code = "WrongEmail",
+                message = "Given email doesn't exist in database"
+            });
 
         }
 
@@ -188,6 +198,8 @@ namespace Lollipop.API.Controllers
                 message = "Wrong password"
                 });
             }
+            
+
             return StatusCode(500,new { 
             code = "SignInFailed",
             message = "Wrong email"
