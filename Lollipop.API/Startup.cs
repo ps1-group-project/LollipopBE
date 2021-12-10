@@ -57,7 +57,7 @@ namespace Lollipop.API
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sql_lollipop")));
-            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<LollipopDbContext>();
+            services.AddIdentity<AppUser,IdentityRole>().AddEntityFrameworkStores<LollipopDbContext>();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));

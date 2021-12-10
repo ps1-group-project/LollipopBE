@@ -5,8 +5,9 @@ namespace Lollipop.Persistence.DbContext
     using Lollipop.Core.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
     //using Microsoft.AspNetCore.
-    public class LollipopDbContext : IdentityDbContext<AppUser, AppUserRole,Guid>
+    public class LollipopDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Advertisement> Advertisements {get;set;}
         public DbSet<AttributeC> Attributes {get;set;}

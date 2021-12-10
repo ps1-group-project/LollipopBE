@@ -1,9 +1,8 @@
 ﻿using System;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 
 namespace Lollipop.Core.Models
 {
-    //here we can put our fields for user
     public class AppUser:IdentityUser
     {
         public string firstName { get; set; }
