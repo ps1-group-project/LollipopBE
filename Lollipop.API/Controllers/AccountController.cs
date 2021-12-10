@@ -68,5 +68,19 @@ namespace Lollipop.API.Controllers
 
             return Redirect(redirectURL);
         }
+
+        [Route("new")]
+        [HttpPost]
+        public async Task<ActionResult> CreateUser(string email, string password, string firstName, string lastName)
+        {
+
+        }
+
+        [Route("sign-in")]
+        [HttpPost]
+        public async Task<IActionResult> SignIn(string email,string password )
+        {
+
+        }
     }
 }
