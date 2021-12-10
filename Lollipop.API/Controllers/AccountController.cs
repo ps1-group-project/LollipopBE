@@ -112,14 +112,7 @@ namespace Lollipop.API.Controllers
         }
 
         [HttpPut]
-<<<<<<< HEAD
-        [Route("password-change")]
-        public async Task<IActionResult> PasswordChange(string secretToken, string newPassword){
-
-            //search database for the secretToken
-=======
         public async Task<IActionResult> PasswordChange(string email,string secretToken, string password){
->>>>>>> 933862f (Creating user works)
 
             var user = await  _userManager.FindByEmailAsync(email);
             if(user!= null)
