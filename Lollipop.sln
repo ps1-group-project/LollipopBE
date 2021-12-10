@@ -7,13 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.Application", "Lol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.Core", "Lollipop.Core\Lollipop.Core.csproj", "{9F83A332-EA87-4FED-9164-5F41CFDD2712}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.CoreTests", "Lollipop.CoreTests\Lollipop.CoreTests.csproj", "{670FD9BA-3FBD-4438-94DC-F67D62E7334F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.Persistence", "Lollipop.Persistence\Lollipop.Persistence.csproj", "{A2638D53-0E2D-4464-BD83-7F7C017A42D2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.Infrastructure", "Lollipop.Infrastructure\Lollipop.Infrastructure.csproj", "{56FDEC93-7195-4FF4-B381-D92A8389E993}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.Tests", "Lollipop.Tests\Lollipop.Tests.csproj", "{53C236F5-7E2F-4BF4-B6E2-DDAE9AD14029}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lollipop.API", "Lollipop.API\Lollipop.API.csproj", "{982CC908-8ECA-4271-BF00-DADB69CB24B7}"
 EndProject
@@ -31,10 +27,6 @@ Global
 		{9F83A332-EA87-4FED-9164-5F41CFDD2712}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F83A332-EA87-4FED-9164-5F41CFDD2712}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F83A332-EA87-4FED-9164-5F41CFDD2712}.Release|Any CPU.Build.0 = Release|Any CPU
-		{670FD9BA-3FBD-4438-94DC-F67D62E7334F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{670FD9BA-3FBD-4438-94DC-F67D62E7334F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{670FD9BA-3FBD-4438-94DC-F67D62E7334F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{670FD9BA-3FBD-4438-94DC-F67D62E7334F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A2638D53-0E2D-4464-BD83-7F7C017A42D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2638D53-0E2D-4464-BD83-7F7C017A42D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2638D53-0E2D-4464-BD83-7F7C017A42D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,10 +35,6 @@ Global
 		{56FDEC93-7195-4FF4-B381-D92A8389E993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56FDEC93-7195-4FF4-B381-D92A8389E993}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56FDEC93-7195-4FF4-B381-D92A8389E993}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53C236F5-7E2F-4BF4-B6E2-DDAE9AD14029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53C236F5-7E2F-4BF4-B6E2-DDAE9AD14029}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53C236F5-7E2F-4BF4-B6E2-DDAE9AD14029}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53C236F5-7E2F-4BF4-B6E2-DDAE9AD14029}.Release|Any CPU.Build.0 = Release|Any CPU
 		{982CC908-8ECA-4271-BF00-DADB69CB24B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{982CC908-8ECA-4271-BF00-DADB69CB24B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{982CC908-8ECA-4271-BF00-DADB69CB24B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
