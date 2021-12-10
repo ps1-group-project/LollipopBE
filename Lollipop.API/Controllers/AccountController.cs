@@ -14,27 +14,22 @@ using Microsoft.Extensions.Configuration;
 namespace Lollipop.API.Controllers
 {
     [AllowAnonymous]
-    [Route("account")]
+    [Route("[controller]/[action]")]
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration _config;
         public AccountController(IConfiguration config){
             _config = config;
         }
-
-        [HttpPost]
-        [Route("google-login")]
         public IActionResult GoogleLogin()
         {
             var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
 
-        [HttpGet]
-        [Route("google-response")]
         public async Task<IActionResult> GoogleResponse()
         {
-            string redirectURL = _config.GetValue<string>("FrontEndAddressMain");
+            string redirectURL = _config.GetValue<string>("FrontEndAddress:Main");
             return Redirect(redirectURL);
         }
 
@@ -66,14 +61,12 @@ namespace Lollipop.API.Controllers
             return Redirect(redirectURL);
         }
 
-        [Route("new")]
         [HttpPost]
-        public async Task<OkResult> CreateUser(string email, string password, string firstName, string lastName)
+        public async Task<OkResult> New(string email, string password, string firstName, string lastName)
         {
             return Ok();
         }
 
-        [Route("sign-in")]
         [HttpPost]
         public async Task<OkResult> SignIn(string email,string password )
         {
