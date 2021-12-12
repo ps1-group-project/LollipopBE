@@ -17,7 +17,7 @@
         /// </summary>
         public string Type { get; private set; }
 
-        private AttributeC(string name, string type)
+        public AttributeC(string name, string type)
         {
             Name = name;
             Type = type;

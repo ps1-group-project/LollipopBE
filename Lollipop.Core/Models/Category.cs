@@ -43,5 +43,11 @@
         {
             return new(name, attributes);
         }
+
+        public void Edit(string name, IEnumerable<AttributeC> attributes)
+        {
+            Name = name;
+            Attributes = attributes;
+        }
     }
 }

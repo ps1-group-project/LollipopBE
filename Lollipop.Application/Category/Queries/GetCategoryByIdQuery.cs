@@ -1,5 +1,6 @@
 ﻿namespace Lollipop.Application.Category.Queries
 {
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Lollipop.Application.Repository;
@@ -21,7 +22,8 @@
 
             public async Task<Category> Handle(GetCategoryByIdQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.GetByIdAsync(query.Id);
+                //return await _repository.GetByIdAsync(query.Id);
+                return (await _repository.GetAll(c => c.Id == query.Id, null, "Attributes,Advertisements")).Single();
 
             }
         }
