@@ -12,18 +12,19 @@
 
     public class UpdateAdvertisementCommand : IRequest<int>
     {
-        //Command
-        public record Command(int Id, string title, string content, IEnumerable<Category> categories, IEnumerable<Keyword> keywords) : IRequest<int>;
-
-        //Handler
-        public class Handler : IRequestHandler<Command, int>
+        public int Id { get; init; }
+        public string title { get; set; }
+        public string content { get; set; }
+        public IEnumerable<Category> categories { get; set; }
+        public IEnumerable<Keyword> keywords { get; set; }
+        public class Handler : IRequestHandler<UpdateAdvertisementCommand, int>
         {
             private readonly IRepository<Advertisement> _repository;
             public Handler(IRepository<Advertisement> repository)
             {
                 _repository = repository;
             }
-            public async Task<int> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<int> Handle(UpdateAdvertisementCommand request, CancellationToken cancellationToken)
             {
                 Advertisement toUpdate = await _repository.GetByIdAsync(request.Id);
                 toUpdate.Title = request.title;

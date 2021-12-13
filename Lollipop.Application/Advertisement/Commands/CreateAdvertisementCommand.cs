@@ -9,18 +9,20 @@
     using System.Collections.Generic;
     public class CreateAdvertisementCommand : IRequest<int>
     {
-        //Command
-        public record Command(int userId, string title, string content, IEnumerable<Category> categories, IEnumerable<Keyword> keywords) : IRequest<int>;
+        public int userId { get; init; }
+        public string title { get; set; }
+        public string content { get; set; }
+        public IEnumerable<Category> categories { get; set; }
+        public IEnumerable<Keyword> keywords { get; set; }
 
-        //Handler
-        public class Handler : IRequestHandler<Command, int>
+        public class Handler : IRequestHandler<CreateAdvertisementCommand, int>
         {
             private readonly IRepository<Advertisement> _repository;
             public Handler(IRepository<Advertisement> repository)
             {
                 _repository = repository;
             }
-            public async Task<int> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateAdvertisementCommand request, CancellationToken cancellationToken)
             {
                 Advertisement advert = Advertisement.Create(request.userId, request.title, request.content);
                 await _repository.AddAsync(advert);
