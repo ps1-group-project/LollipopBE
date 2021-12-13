@@ -23,7 +23,7 @@
             Ok(await _mediator.Send(query));
 
         [HttpGet]
-        public async Task<ActionResult<Advertisement>> GetAdvertisementById([FromBody] GetAdvertisementByIdQuery query) =>
+        public async Task<ActionResult<Advertisement>> GetAdvertisementById([FromQuery] GetAdvertisementByIdQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpPost]
