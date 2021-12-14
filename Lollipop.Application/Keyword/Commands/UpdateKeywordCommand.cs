@@ -9,6 +9,8 @@
     using Lollipop.Core.Models;
     using Lollipop.Application.Repository;
     using System.Threading;
+    using Lollipop.Application.Keyword.Validators;
+    using FluentValidation;
 
     public class UpdateKeywordCommand : IRequest<int>
     {
@@ -24,6 +26,7 @@
 
             public async Task<int> Handle(UpdateKeywordCommand request, CancellationToken cancellationToken)
             {
+                await new UpdateKeywordValidator().ValidateAndThrowAsync(request, cancellationToken);
                 Keyword toUpdate = await _repository.GetByIdAsync(request.Id);
                 if (request.name != null) toUpdate.Name = request.name;
                 await _repository.UpdateAsync(toUpdate);

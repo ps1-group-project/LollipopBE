@@ -9,6 +9,9 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Lollipop.Core.Models;
+    using Lollipop.Application.Keyword.Validators;
+    using FluentValidation;
+
     public class DeleteKeywordCommand : IRequest<int>
     {
         public int Id { get; set; }
@@ -21,8 +24,9 @@
             }
             public async Task<int> Handle(DeleteKeywordCommand request, CancellationToken cancellationToken)
             {
+                await new DeleteKeywordValidator().ValidateAndThrowAsync(request, cancellationToken);
                 Keyword toDelete = await _repository.GetByIdAsync(request.Id);
-                _repository.DeleteAsync(toDelete);
+                await _repository.DeleteAsync(toDelete);
                 return toDelete.Id;
             }
         }

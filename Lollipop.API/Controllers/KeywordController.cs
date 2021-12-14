@@ -7,7 +7,9 @@
     using Lollipop.Application.Keyword.Queries;
     using System.Collections.Generic;
     using Lollipop.Core.Models;
+    using Lollipop.API.Filters;
 
+    [ExceptionFilter]
     [ApiController]
     [Route("[controller]/[action]")]
     public class KeywordController : ControllerBase
