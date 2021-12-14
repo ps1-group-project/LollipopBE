@@ -33,5 +33,11 @@
         {
             return new(name, type);
         }
+
+        public void Edit(string name, string type)
+        {
+            Name = name;
+            Type = type;
+        }
     }
 }
