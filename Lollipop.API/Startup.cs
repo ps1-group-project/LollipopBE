@@ -56,7 +56,10 @@ namespace Lollipop.API
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddDbContext<LollipopDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("local_sql_lollipop")));
+            services.AddDbContext<LollipopDbContext>(
+                //options => options.UseSqlServer(Configuration.GetConnectionString("local_sql_lollipop")
+                options => options.UseNpgsql(Configuration.GetConnectionString("postgre_sql_lollipop")
+                ));
             services.AddIdentity<AppUser, IdentityRole>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
