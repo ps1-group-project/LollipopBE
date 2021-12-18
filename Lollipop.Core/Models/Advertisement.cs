@@ -33,12 +33,12 @@
         /// <summary>
         /// Categories
         /// </summary>
-        public IEnumerable<Category> Categories { get; private set; }
+        public ICollection<Category> Categories { get; private set; } = new List<Category>();
 
         /// <summary>
         /// Keywords
         /// </summary>
-        public IEnumerable<Keyword> Keywords { get; private set; }
+        public ICollection<Keyword> Keywords { get; private set; } = new List<Keyword>();
 
         /// <summary>
         /// Creation date.
@@ -47,14 +47,12 @@
 
         private Advertisement(){}
 
-        private Advertisement(int userId, string title, string content, IEnumerable<Category> categories, IEnumerable<Keyword> keywords)
+        private Advertisement(int userId, string title, string content)
         {
             UserId = userId;
             VisitorCounter = 0;
             Title = title;
             Content = content;
-            Categories = categories;
-            Keywords = keywords;
             CreationDate = DateTime.Now;
         }
 
@@ -67,9 +65,35 @@
         /// <param name="categories">Categories</param>
         /// <param name="keywords">Keywords</param>
         /// <returns>New advertisement</returns>
-        public static Advertisement Create(int userId, string title, string content, IEnumerable<Category> categories, IEnumerable<Keyword> keywords)
+        public static Advertisement Create(int userId, string title, string content)
         {
-            return new(userId, title, content, categories, keywords);
+            return new(userId, title, content);
+        }
+
+        public void AddCategory(Category cat)
+        {
+            if (!Categories.Contains(cat))
+            {
+                Categories.Add(cat);
+            }
+        }
+
+        public void RemoveCategory(Category cat)
+        {
+            Categories.Remove(cat);
+        }
+
+        public void AddKeyword(Keyword keyword)
+        {
+            if (Keywords.Contains(keyword))
+            {
+                Keywords.Add(keyword);
+            }
+        }
+
+        public void RemoveKeyword(Keyword keyword)
+        {
+            Keywords.Remove(keyword);
         }
     }
 }

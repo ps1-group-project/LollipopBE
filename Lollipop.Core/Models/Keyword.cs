@@ -16,14 +16,13 @@
         /// <summary>
         /// List of advertisements
         /// </summary>
-        public IEnumerable<Advertisement> Advertisements{get;private set;}
+        public ICollection<Advertisement> Advertisements { get; private set;} = new List<Advertisement>();
 
         private Keyword(){}
 
         private Keyword(string name)
         {
-            Name = name.ToLower();
-            Advertisements = new List<Advertisement>();
+            Name = name;
         }
 
         /// <summary>
