@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Lollipop.Application.Keyword.Commands;
-using Lollipop.Application.Keyword.Queries;
-using System.Collections.Generic;
-using Lollipop.Core.Models;
+using Microsoft.AspNetCore.Authorization;
+using Lollipop.Application.User.Commands;
+using Lollipop.Application.User.Queries;
 
 namespace Lollipop.API.Controllers
 {
-
+    //[Authorize]//do odkomentowania gdy front ogarnie, że musi być zalogowany by pobrac liste
     [ApiController]
     [Route("[controller]/[action]")]
     public class UserController : ControllerBase
@@ -19,5 +18,42 @@ namespace Lollipop.API.Controllers
         {
             _mediator = mediator;
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] UserCreateCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> LogIn([FromBody] UserLogInCommand command) =>
+
+            Ok(await _mediator.Send(command));
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> LogOut([FromQuery] UserLogOutCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        [HttpPatch]
+        public async Task<IActionResult> ChangeEmail([FromBody] UserChangeEmailCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        [HttpPatch]
+        public async Task<IActionResult> ChangePassword([FromBody] UserChangePasswordCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAccount([FromQuery] UserDeleteAccountCommand command) =>
+            Ok(await _mediator.Send(command));
+
+        //ta metoda pewnie bardziej nadawała by się do jakiegoś panelu admina czy cos
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers([FromQuery] GetAllUsersQuery query) =>
+           Ok(await _mediator.Send(query));
+
+        [HttpGet]
+        public async Task<IActionResult> GetRoles([FromQuery] GetUserRolesQuery query) =>
+            Ok(await _mediator.Send(query));
     }
 }
