@@ -12,8 +12,8 @@ namespace Lollipop.Application.MapperProfile
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                 .ForMember(x => x.Email, y => y.MapFrom(z => z.Email))
                 .ForMember(x => x.PhoneNumber, y => y.MapFrom(z => z.PhoneNumber))
-                .ForMember(x => x.FirstName, y => y.MapFrom(z => z.FirstName))
-                .ForMember(x => x.LastName, y => y.MapFrom(z => z.LastName));
+                .ForMember(x => x.FirstName, y => y.MapFrom(z => z.firstName))
+                .ForMember(x => x.LastName, y => y.MapFrom(z => z.lastName));
         }
     }
 }
