@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lollipop.Application.Services
+namespace Lollipop.Application.Service
 {
     public interface IUserService
     {
@@ -27,7 +27,7 @@ namespace Lollipop.Application.Services
 
         Task<List<string>> GetUserRoles(string userId);
 
-        Task<List<AppUser>> GetAllUsers();
+        Task<List<AppUser>> GetAllUsersAsync();
 
         Task<AppUser> GetUserAsync();
     }

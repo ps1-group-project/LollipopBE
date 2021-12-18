@@ -6,7 +6,7 @@ using System.Security;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using Lollipop.Application.Services;
+using Lollipop.Application.Service;
 using Lollipop.Core.Models;
 using Lollipop.Persistence.DbContext;
 using Microsoft.AspNetCore.Http;
@@ -125,7 +125,7 @@ namespace Lollipop.Persistence.Services
         }
 
 
-        public async Task<List<AppUser>> GetAllUsers()
+        public async Task<List<AppUser>> GetAllUsersAsync()
         {
             var users = await Task.Run(() => _dbContext.Users);
 
