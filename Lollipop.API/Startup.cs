@@ -24,7 +24,7 @@ namespace Lollipop.API
     using Microsoft.AspNetCore.Http;
     using Lollipop.Core.Models;
     using Lollipop.Persistence.TokenService;
-
+    using Lollipop.Application.MapperProfile;
 
     public class Startup
     {
@@ -67,6 +67,7 @@ namespace Lollipop.API
             }).AddEntityFrameworkStores<LollipopDbContext>().AddDefaultTokenProviders();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
+            services.AddAutoMapper(typeof(UserProfile).Assembly);
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<ITokenService, TokenService>();
