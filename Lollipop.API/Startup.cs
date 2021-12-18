@@ -26,7 +26,7 @@ namespace Lollipop.API
     using Lollipop.Persistence.TokenService;
     using Lollipop.Application.MapperProfile;
     using Lollipop.Persistence.Services;
-    using Lollipop.Application.Services;
+    using Lollipop.Application.Service;
 
     public class Startup
     {
