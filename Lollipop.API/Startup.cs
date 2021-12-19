@@ -24,7 +24,9 @@ namespace Lollipop.API
     using Microsoft.AspNetCore.Http;
     using Lollipop.Core.Models;
     using Lollipop.Persistence.TokenService;
-
+    using Lollipop.Application.MapperProfile;
+    using Lollipop.Persistence.Services;
+    using Lollipop.Application.Service;
 
     public class Startup
     {
@@ -42,12 +44,10 @@ namespace Lollipop.API
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-          //Next, using the AddCookie method, we need to set up a default path for where a user is redirected when they require authentication. We have set this up as /account/google-login, and we will set this up in a bit.
           .AddCookie(options =>
           {
               options.LoginPath = "/account/google-login";
           })
-          //Finally, using the AddGoogle method, we provide our client ID and client secret which was created when we set up a project in Google Cloud Platform.
           .AddGoogle(options =>
           {
               options.ClientId = "996066867520-1npd5tcf3hqljfv8jj5spri40srqm2ro.apps.googleusercontent.com";
@@ -63,17 +63,14 @@ namespace Lollipop.API
             services.AddIdentity<AppUser, IdentityRole>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
-                //other options also go here
             }).AddEntityFrameworkStores<LollipopDbContext>().AddDefaultTokenProviders();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
+            services.AddAutoMapper(typeof(UserProfile).Assembly);
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<IMailService, MailService>();
-            services.AddTransient<ITokenService, TokenService>();
-
-            /*            The first thing we do is call AddAuthentication and set up a default scheme.As we are not using Identity for this example, we will use the CookieAuthenticationDefaults scheme.
-            */
-
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,13 +80,11 @@ namespace Lollipop.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                //w oknie przegl�darki co� w stylu localhost:PORT/swagger/index.html by dosta� si�
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lollipop.API v1"));
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

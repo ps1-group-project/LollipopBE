@@ -11,7 +11,7 @@
     public class CreateCategoryCommand : IRequest<int>
     {
         public string Name { get; init; }
-        public IEnumerable<AttributeC> Attributes { get; init; }
+
         public class Handler : IRequestHandler<CreateCategoryCommand, int>
         {
             private readonly IRepository<Category> _repository;
@@ -27,7 +27,7 @@
                 //await new CreateCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
 
                 
-                Category category = Category.Create(request.Name, request.Attributes);
+                Category category = Category.Create(request.Name);
                 await _repository.AddAsync(category);
 
                 return category.Id;

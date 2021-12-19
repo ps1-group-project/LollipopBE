@@ -12,7 +12,13 @@
         /// <summary>
         /// Author's Identifier.
         /// </summary>
-        public int UserId { get; private set; }
+        public string AuthorId { get; private set; }
+
+        /// <summary>
+        /// Target message identifier.
+        /// </summary>
+
+        public string TargetId { get; private set; }
 
         /// <summary>
         /// Content.
@@ -26,9 +32,10 @@
 
         private Message(){}
 
-        private Message(int userId, string content)
+        private Message(string userId, string targetId, string content)
         {
-            UserId = userId;
+            AuthorId = userId;
+            TargetId = targetId;
             Content = content;
             CreationDate = DateTime.Now;
         }
@@ -37,11 +44,12 @@
         /// Create new Message
         /// </summary>
         /// <param name="userId">User identifier</param>
+        /// <param name="targetId">Target identifier</param>
         /// <param name="content">Content of message</param>
         /// <returns>New Message</returns>
-        public static Message Create(int userId, string content)
+        public static Message Create(string userId, string targetId, string content)
         {
-            return new(userId, content);
+            return new(userId, targetId, content);
         }
     }
 }
