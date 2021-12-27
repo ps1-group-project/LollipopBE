@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Lollipop.Application.Advertisement.Queries;
     using Lollipop.Core.Models;
+    using Lollipop.Application.Advertisement.Commands;
 
     [ApiController]
     [Route("[controller]/[action]")]
@@ -21,5 +22,8 @@
         public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements([FromQuery] GetAdvertisementsQuery query) =>
             Ok(await _mediator.Send(query));
 
+        [HttpPost]
+        public async Task<ActionResult> AddKeyword([FromBody] AddNewKeywordCommand command) => 
+            Ok(await _mediator.Send(command));
     }
 }
