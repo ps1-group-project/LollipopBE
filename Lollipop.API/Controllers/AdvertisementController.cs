@@ -25,5 +25,9 @@
         [HttpPost]
         public async Task<ActionResult> AddKeyword([FromBody] AddNewKeywordCommand command) => 
             Ok(await _mediator.Send(command));
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteKeyword([FromBody ] DeleteKeywordCommand command) =>
+            Ok(await _mediator.Send(command));
     }
 }
