@@ -19,7 +19,6 @@
             _mediator = mediator;
         }
 
-        //localhost:port/Keyword/CreateKeyword
         [HttpPost]
         public async Task CreateKeyword([FromBody] CreateKeywordCommand command) =>
             await _mediator.Send(command);
@@ -31,5 +30,13 @@
         [HttpGet]
         public async Task<ActionResult> GetKeywordById([FromQuery] GetKeywordByIdQuery query) =>
             Ok(await _mediator.Send(query));
+
+        [HttpDelete]
+        public async Task DeleteKeyword([FromBody] DeleteKeywordCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpPut]
+        public async Task UpdateKeyword([FromBody] UpdateKeywordCommand command) =>
+            await _mediator.Send(command);
     }
 }
