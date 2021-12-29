@@ -46,8 +46,6 @@
         public DateTime CreationDate { get; private set; }
         public void SetTitle(string title) => this.Title = title;
         public void SetContent(string content) => this.Content = content;
-        public void SetCategories(IEnumerable<Category> categories) => this.Categories = categories;
-        public void SetKeywords(IEnumerable<Keyword> keywords) => this.Keywords = keywords;
         private Advertisement(){}
 
         private Advertisement(int userId, string title, string content)

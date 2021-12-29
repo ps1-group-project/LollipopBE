@@ -12,7 +12,7 @@
 
     public class CreateForbiddenWord : IRequest<int>
     {
-        public string word { get; set; }
+        public string Word { get; set; }
         public class Handler : IRequestHandler<CreateForbiddenWord, int>
         {
             private readonly IRepository<ForbiddenWord> _repository;
@@ -22,7 +22,7 @@
             }
             public async Task<int> Handle(CreateForbiddenWord request, CancellationToken cancellationToken)
             {
-                ForbiddenWord word = ForbiddenWord.Create(request.word);
+                ForbiddenWord word = ForbiddenWord.Create(request.Word);
                 await _repository.AddAsync(word);
                 return word.Id;
             }

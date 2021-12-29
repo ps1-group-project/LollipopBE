@@ -26,9 +26,9 @@
         public async Task<ActionResult<ForbiddenWord>> GetById([FromQuery] GetForbiddenWordsByIdQuery query) =>
             Ok(await _mediator.Send(query));
 
-        [HttpDelete]
-        public async Task<int> DeleteById([FromBody] DeleteForbiddenWordByIdCommand command) =>
-            await _mediator.Send(command);
+       // [HttpDelete]
+        // public async Task<int> DeleteById([FromQuery] Dele command) =>
+        //     await _mediator.Send(command);
 
         [HttpPut]
         public async Task<int> Update([FromBody] UpdateForbiddenWordCommand command) =>
