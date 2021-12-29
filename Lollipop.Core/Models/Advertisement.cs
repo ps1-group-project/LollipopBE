@@ -23,12 +23,12 @@
         /// <summary>
         /// Title
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get;set; }
 
         /// <summary>
         /// Content
         /// </summary>
-        public string Content { get; private set; }
+        public string Content { get;set; }
 
         /// <summary>
         /// Categories
