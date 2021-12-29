@@ -23,12 +23,12 @@
         /// <summary>
         /// Title
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get;private set; }
 
         /// <summary>
         /// Content
         /// </summary>
-        public string Content { get; private set; }
+        public string Content { get;private set; }
 
         /// <summary>
         /// Categories
@@ -44,7 +44,8 @@
         /// Creation date.
         /// </summary>
         public DateTime CreationDate { get; private set; }
-
+        public void SetTitle(string title) => this.Title = title;
+        public void SetContent(string content) => this.Content = content;
         private Advertisement(){}
 
         private Advertisement(int userId, string title, string content)
