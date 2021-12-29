@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Lollipop.Application.Advertisement.Queries;
+    using Lollipop.Application.Advertisement.Commands;
     using Lollipop.Core.Models;
 
     [ApiController]
@@ -21,5 +22,8 @@
         public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements([FromQuery] GetAdvertisementsQuery query) =>
             Ok(await _mediator.Send(query));
 
+        [HttpPost]
+        public async Task CreateAdvertisement([FromBody] CreateAdvertisementCommand command) =>
+             await _mediator.Send(command);
     }
 }
