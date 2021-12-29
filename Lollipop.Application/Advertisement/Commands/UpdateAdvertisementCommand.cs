@@ -30,10 +30,10 @@
             {
                 await new UpdateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
                 Advertisement toUpdate = await _repository.GetByIdAsync(request.Id);
-                if(request.title != null) toUpdate.Title = request.title;
-                if(request.content != null) toUpdate.Content = request.content;
-                if(request.categories != null) toUpdate.Categories = request.categories;
-                if(request.keywords != null) toUpdate.Keywords = request.keywords;
+                if (request.title != null) toUpdate.SetTitle(request.title);
+                if (request.content != null) toUpdate.SetContent(request.content);
+                if (request.categories != null) toUpdate.SetCategories(request.categories);
+                if (request.keywords != null) toUpdate.SetKeywords(request.keywords);
                 await _repository.UpdateAsync(toUpdate);
                 return toUpdate.Id;
             }

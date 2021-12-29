@@ -26,22 +26,15 @@ namespace Lollipop.API.Controllers
     using Microsoft.AspNetCore.Authentication.Google;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Newtonsoft.Json.Serialization;
-    using System.Web.Helpers;
     using Microsoft.Extensions.Configuration;
     using Lollipop.Persistence.EmailSender;
     using Lollipop.Persistence.DbContext;
     using Lollipop.Core.Models;
-    using Newtonsoft.Json;
     using Lollipop.Persistence.TokenService;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.WebUtilities;
-    using System.Text;
-    using System.Security.Claims;
     using Lollipop.API.Filters;
     using Lollipop.Persistence.Exceptions;
     [ExceptionFilter]

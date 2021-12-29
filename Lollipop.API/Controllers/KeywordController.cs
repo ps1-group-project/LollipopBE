@@ -22,23 +22,23 @@
         }
 
         [HttpPost]
-        public async Task CreateKeyword([FromBody] CreateKeywordCommand command) =>
+        public async Task Create([FromBody] CreateKeywordCommand command) =>
             await _mediator.Send(command);
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Keyword>>> GetKeywords([FromQuery] GetKeywordsQuery query) =>
+        public async Task<ActionResult<IEnumerable<Keyword>>> GetAll([FromQuery] GetKeywordsQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpGet]
-        public async Task<ActionResult> GetKeywordById([FromQuery] GetKeywordByIdQuery query) =>
+        public async Task<ActionResult> GetById([FromQuery] GetKeywordByIdQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpDelete]
-        public async Task DeleteKeyword([FromBody] DeleteKeywordCommand command) =>
+        public async Task Delete([FromBody] DeleteKeywordCommand command) =>
             await _mediator.Send(command);
 
         [HttpPut]
-        public async Task UpdateKeyword([FromBody] UpdateKeywordCommand command) =>
+        public async Task Update([FromBody] UpdateKeywordCommand command) =>
             await _mediator.Send(command);
     }
 }

@@ -21,23 +21,23 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements([FromQuery] GetAdvertisementsQuery query) =>
+        public async Task<ActionResult<IEnumerable<Advertisement>>> GetAll([FromQuery] GetAdvertisementsQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpGet]
-        public async Task<ActionResult<Advertisement>> GetAdvertisementById([FromQuery] GetAdvertisementByIdQuery query) =>
+        public async Task<ActionResult<Advertisement>> GetById([FromQuery] GetAdvertisementByIdQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpPost]
-        public async Task CreateAdvertisement([FromBody] CreateAdvertisementCommand command) =>
+        public async Task Create([FromBody] CreateAdvertisementCommand command) =>
              await _mediator.Send(command);
 
         [HttpDelete]
-        public async Task DeleteAdvertisement([FromBody] DeleteAdvertisementCommand command) =>
+        public async Task Delete([FromQuery] DeleteAdvertisementCommand command) =>
             await _mediator.Send(command);
 
         [HttpPut]
-        public async Task UpdateAdvertisement([FromBody] UpdateAdvertisementCommand command) =>
+        public async Task Update([FromBody] UpdateAdvertisementCommand command) =>
             await _mediator.Send(command);
     }
 }

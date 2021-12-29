@@ -15,7 +15,7 @@
     public class UpdateKeywordCommand : IRequest<int>
     {
         public int Id { get; set; }
-        public string name { get; set; }
+        public string Name { get; set; }
         public class Handler : IRequestHandler<UpdateKeywordCommand, int>
         {
             private readonly IRepository<Keyword> _repository;
@@ -28,7 +28,6 @@
             {
                 await new UpdateKeywordValidator().ValidateAndThrowAsync(request, cancellationToken);
                 Keyword toUpdate = await _repository.GetByIdAsync(request.Id);
-                if (request.name != null) toUpdate.Name = request.name;
                 await _repository.UpdateAsync(toUpdate);
                 return toUpdate.Id;
             }

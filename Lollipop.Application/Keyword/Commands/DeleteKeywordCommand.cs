@@ -25,7 +25,7 @@
             public async Task<int> Handle(DeleteKeywordCommand request, CancellationToken cancellationToken)
             {
                 await new DeleteKeywordValidator().ValidateAndThrowAsync(request, cancellationToken);
-                Keyword toDelete = await _repository.GetByIdAsync(request.Id);
+                Keyword toDelete = await _repository.GetByIdAsync(request.Id) ?? throw new Exception($"Entity { request.Id}not found");
                 await _repository.DeleteAsync(toDelete);
                 return toDelete.Id;
             }

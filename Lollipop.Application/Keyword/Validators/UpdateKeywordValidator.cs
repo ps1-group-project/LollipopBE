@@ -6,7 +6,7 @@
     {
         public UpdateKeywordValidator()
         {
-            RuleFor(x => x.name)
+            RuleFor(x => x.Name)
                 .NotEmpty()
                 .WithMessage("name of Keyword cannot be empty");
             RuleFor(x => x.Id)
