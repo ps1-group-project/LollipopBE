@@ -9,6 +9,8 @@
     using MediatR;
     using Lollipop.Core.Models;
     using Lollipop.Application.Repository;
+    using Lollipop.Application.Advertisement.Validators;
+    using FluentValidation;
 
     public class UpdateAdvertisementCommand : IRequest<int>
     {
@@ -26,11 +28,12 @@
             }
             public async Task<int> Handle(UpdateAdvertisementCommand request, CancellationToken cancellationToken)
             {
+                await new UpdateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
                 Advertisement toUpdate = await _repository.GetByIdAsync(request.Id);
-                toUpdate.Title = request.title;
-                toUpdate.Content = request.content;
-                toUpdate.Categories = request.categories;
-                toUpdate.Keywords = request.keywords;
+                if(request.title != null) toUpdate.Title = request.title;
+                if(request.content != null) toUpdate.Content = request.content;
+                if(request.categories != null) toUpdate.Categories = request.categories;
+                if(request.keywords != null) toUpdate.Keywords = request.keywords;
                 await _repository.UpdateAsync(toUpdate);
                 return toUpdate.Id;
             }

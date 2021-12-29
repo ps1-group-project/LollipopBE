@@ -7,7 +7,9 @@
     using Lollipop.Application.Advertisement.Queries;
     using Lollipop.Application.Advertisement.Commands;
     using Lollipop.Core.Models;
+    using Lollipop.API.Filters;
 
+    [ExceptionFilter]
     [ApiController]
     [Route("[controller]/[action]")]
     public class AdvertisementController : Controller

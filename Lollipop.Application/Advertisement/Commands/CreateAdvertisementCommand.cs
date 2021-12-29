@@ -7,6 +7,9 @@
     using System.Threading.Tasks;
     using Lollipop.Core.Models;
     using System.Collections.Generic;
+    using Lollipop.Application.Advertisement.Validators;
+    using FluentValidation;
+
     public class CreateAdvertisementCommand : IRequest<int>
     {
         public int userId { get; init; }
@@ -24,8 +27,11 @@
             }
             public async Task<int> Handle(CreateAdvertisementCommand request, CancellationToken cancellationToken)
             {
+                await new CreateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
+
                 Advertisement advert = Advertisement.Create(request.userId, request.title, request.content);
                 await _repository.AddAsync(advert);
+                
                 return advert.Id;
             }
         }
