@@ -27,7 +27,8 @@
             public async Task<int> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
             {
                 //await new UpdateCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
-                Category category = (await _repository.GetAll(c=>c.Id == request.Id, null, "Attributes,Advertisements")).Single(); 
+                
+                Category category = await _repository.GetByIdAsync(request.Id);
                 category.Edit(request.Name, request.Attributes);
 
                 await _repository.UpdateAsync(category);
