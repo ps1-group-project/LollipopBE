@@ -51,5 +51,12 @@
         {
             return new(userId, targetId, content);
         }
+
+        public void Edit(string userId, string targetId, string content)
+        {
+            this.AuthorId = userId;
+            this.TargetId = targetId;
+            this.Content = content;
+        }
     }
 }
