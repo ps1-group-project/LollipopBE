@@ -94,7 +94,8 @@ namespace Lollipop.API
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 //.WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000")
-                .AllowAnyOrigin()
+                //.AllowAnyOrigin()
+                .SetIsOriginAllowed(_ => true)
                 .AllowCredentials());
 
             app.UseRouting();
