@@ -10,7 +10,7 @@
         /// <summary>
         /// Forbidden Word.
         /// </summary>
-        public string Word { get; private set; }
+        public string Word { get; set; }
 
         private ForbiddenWord(){}
 

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
-using System.Web.Helpers;
 using Microsoft.Extensions.Configuration;
 using Lollipop.Persistence.EmailSender;
 using Lollipop.Persistence.DbContext;
@@ -22,6 +21,23 @@ using System.Security.Claims;
 
 namespace Lollipop.API.Controllers
 {
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication.Google;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.Configuration;
+    using Lollipop.Persistence.EmailSender;
+    using Lollipop.Persistence.DbContext;
+    using Lollipop.Core.Models;
+    using Lollipop.Persistence.TokenService;
+    using Microsoft.AspNetCore.Identity;
+    using Lollipop.API.Filters;
+    using Lollipop.Persistence.Exceptions;
+    [ExceptionFilter]
     [AllowAnonymous]
     [Route("[controller]/[action]")]
     public class AccountController : ControllerBase
@@ -79,7 +95,6 @@ namespace Lollipop.API.Controllers
         }
 
         [HttpPut]
-        [Route("password-recovery")]
         public async Task<IActionResult> PasswordRecovery(string email){
 
             var user = await _userManager.FindByEmailAsync(email);
@@ -186,17 +201,10 @@ namespace Lollipop.API.Controllers
                         refreshToken = _refreshToken
                     });
                 }
-                return StatusCode(500,new {
-                code = "SignInFailed",
-                message = "Wrong password"
-                });
+                throw new WrongPasswordException("WrongPassword");
             }
-            
 
-            return StatusCode(500,new { 
-            code = "SignInFailed",
-            message = "Wrong email"
-            });
+            throw new UserNotFoundException("WrongEmail");
         }
     }
 }
