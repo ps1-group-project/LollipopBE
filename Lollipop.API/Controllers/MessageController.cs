@@ -19,7 +19,7 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Message>>> GetAll([FromQuery] GetMessagesQuery query) =>
+        public async Task<ActionResult<IEnumerable<Message>>> GetAll([FromQuery] GetMessagesQuery  query) =>
             Ok(await _mediator.Send(query));
 
         [HttpGet]

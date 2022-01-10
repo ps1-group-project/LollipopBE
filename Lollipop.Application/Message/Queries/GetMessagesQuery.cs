@@ -1,4 +1,4 @@
-﻿namespace Lollipop.Application.ForbiddenWord.Queries
+﻿namespace Lollipop.Application.Message.Queries
 {
     using System.Threading;
     using System.Threading.Tasks;
