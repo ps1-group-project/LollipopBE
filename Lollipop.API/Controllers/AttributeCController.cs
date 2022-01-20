@@ -8,7 +8,7 @@
     using Lollipop.Core.Models;
 
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("Attribute/[action]")]
     public class AttributeCController : Controller
     {
         private readonly IMediator _mediator;
