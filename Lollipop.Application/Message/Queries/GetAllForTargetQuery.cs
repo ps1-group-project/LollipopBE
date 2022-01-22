@@ -18,7 +18,7 @@
             }
             public async Task<IEnumerable<Message>> Handle(GetAllForTargetQuery request, CancellationToken cancellationToken)
             {
-                return await _repository.GetAll(m => m.TargetId == request.TargetId);
+                return new List<Message>(); //await _repository.GetAllAsync(m => m.TargetId == request.TargetId); fix that
             }
         }
     }

@@ -8,6 +8,8 @@
     using FluentValidation;
     using Lollipop.Core.Models;
     using MediatR;
+    using Lollipop.Core.Specification;
+
     public class GetCategoryByIdQuery : IRequest<Category>
     {
         public int Id { get; init; }
@@ -25,8 +27,11 @@
             public async Task<Category> Handle(GetCategoryByIdQuery query, CancellationToken cancellationToken)
             {
                 await new GetCategoryByIdValidator().ValidateAndThrowAsync(query, cancellationToken);
-                //return await _repository.GetByIdAsync(query.Id);
-                return (await _repository.GetAll(c => c.Id == query.Id, null, "Attributes,Advertisements")).Single();
+
+                CategorySpecification specification = new(include: new() { x => x.Attributes });
+                specification.SetFilterCondition(x => x.Id == query.Id);
+
+                return (await _repository.GetAllAsync(specification)).FirstOrDefault();
 
             }
         }

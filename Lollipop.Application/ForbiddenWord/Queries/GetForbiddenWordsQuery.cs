@@ -19,7 +19,7 @@
 
             public async Task<IEnumerable<ForbiddenWord>> Handle(GetForbiddenWordsQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.GetAll();
+                return await _repository.GetAllAsync();
             }
         }
     }
