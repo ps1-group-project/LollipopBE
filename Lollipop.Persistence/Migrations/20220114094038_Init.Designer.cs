@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lollipop.Persistence.Migrations
 {
     [DbContext(typeof(LollipopDbContext))]
-    [Migration("20211218130456_Init")]
+    [Migration("20220114094038_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,9 @@ namespace Lollipop.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
@@ -44,6 +47,8 @@ namespace Lollipop.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Advertisements");
                 });
@@ -199,16 +204,24 @@ namespace Lollipop.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TargetId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Messages");
                 });
@@ -373,11 +386,25 @@ namespace Lollipop.Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Lollipop.Core.Models.Advertisement", b =>
+                {
+                    b.HasOne("Lollipop.Core.Models.AppUser", null)
+                        .WithMany("Advertisements")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("Lollipop.Core.Models.AttributeC", b =>
                 {
                     b.HasOne("Lollipop.Core.Models.Category", null)
                         .WithMany("Attributes")
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("Lollipop.Core.Models.Message", b =>
+                {
+                    b.HasOne("Lollipop.Core.Models.AppUser", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Lollipop.Persistence.RelationClasses.AdvertisementCategory", b =>
@@ -467,6 +494,13 @@ namespace Lollipop.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Lollipop.Core.Models.AppUser", b =>
+                {
+                    b.Navigation("Advertisements");
+
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("Lollipop.Core.Models.Category", b =>
