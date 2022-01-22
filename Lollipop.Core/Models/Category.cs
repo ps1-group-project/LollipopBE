@@ -17,12 +17,12 @@
         /// <summary>
         /// List of attributes for category.
         /// </summary>
-        public IEnumerable<AttributeC> Attributes { get; private set; } = new List<AttributeC>();
+        public ICollection<AttributeC> Attributes { get; private set; } = new List<AttributeC>();
 
         /// <summary>
         /// List of advertisements
         /// </summary>
-        public IEnumerable<Advertisement> Advertisements { get; private set;} = new List<Advertisement>();
+        public ICollection<Advertisement> Advertisements { get; private set;} = new List<Advertisement>();
 
         private Category(){}
 
@@ -47,9 +47,19 @@
             Name = name;
         }
 
-        public void SetAttributes( IEnumerable<AttributeC> attributes)
+        public void AddAttribute(AttributeC a)
         {
-            Attributes = attributes;
+            if (!Attributes.Contains(a)){
+                Attributes.Add(a);
+            }
+        }
+
+        public void RemoveAttribute(AttributeC a)
+        {
+            if (Attributes.Contains(a))
+            {
+                Attributes.Remove(a);
+            }
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Lollipop.Persistence.Repositories
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System;
+    using Lollipop.Persistence.Services;
+    using Lollipop.Core.Specification;
 
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -18,6 +20,17 @@ namespace Lollipop.Persistence.Repositories
         public Repository(LollipopDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public List<T> GetAll(IBaseSpecification<T> specification = null) =>
+            SpecificationEvaluator<T>.GetEvaluatedQuery(DbSet, specification).ToList();
+
+        public Task<List<T>> GetAllAsync(IBaseSpecification<T> specification = null) =>
+            SpecificationEvaluator<T>.GetEvaluatedQuery(DbSet, specification).ToListAsync();
+
+        public int GetCount(IBaseSpecification<T> specification = null)
+        {
+            return SpecificationEvaluator<T>.GetEvaluatedQuery(DbSet, specification).Count();
         }
 
         public async Task<T> AddAsync(T entity)
@@ -54,33 +67,6 @@ namespace Lollipop.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
 
             return _dbContext.Entry(entity).Entity;
-        }
-        public async Task<IEnumerable<T>> GetAll(
-            Expression<Func<T, bool>> filter = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeProperties = "")
-        {
-            IQueryable<T> query = DbSet;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return await orderBy(query).ToListAsync();
-            }
-            else
-            {
-                return await query.ToListAsync();
-            }
         }
     }
 }

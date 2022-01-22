@@ -14,7 +14,6 @@
     {
         public int Id { get; init; }
         public string Name { get; init; }
-        public IEnumerable<AttributeC> Attributes { get; init; }
         public class Handler : IRequestHandler<UpdateCategoryCommand, int>
         {
             private readonly IRepository<Category> _repository;
@@ -31,7 +30,6 @@
                 
                 Category category = await _repository.GetByIdAsync(request.Id);
                 category.SetName(request.Name);
-                category.SetAttributes(request.Attributes);
 
                 await _repository.UpdateAsync(category);
 

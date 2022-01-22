@@ -44,7 +44,6 @@ namespace Lollipop.API.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IMailService _mailService;
-        private readonly LollipopDbContext _dbContext;
         private readonly ITokenService _tokenService;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -54,7 +53,6 @@ namespace Lollipop.API.Controllers
             ITokenService tokenService,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager){
-            _dbContext = context;
             _config = config;
             _mailService = mailService;
             _tokenService = tokenService;

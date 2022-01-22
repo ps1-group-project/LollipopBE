@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Lollipop.Application.Repository;
     using Lollipop.Core.Models;
+    using Lollipop.Core.Specification;
     using MediatR;
     public class GetCategoriesQuery : IRequest<IEnumerable<Category>>
     {
@@ -20,7 +21,10 @@
 
             public async Task<IEnumerable<Category>> Handle(GetCategoriesQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.GetAll(null, null, "Attributes,Advertisements");
+                CategorySpecification specification = new(include: new() { x => x.Attributes });
+                List<Category> categories = await _repository.GetAllAsync(specification);
+
+                return categories;
             }
 
         }
