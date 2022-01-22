@@ -105,9 +105,12 @@ namespace Lollipop.Persistence.Services
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, password);
+            IdentityResult roleResult = await _userManager.AddToRoleAsync(user, "User");
 
             if (!result.Succeeded)
                 throw new Exception(result.Errors.Select(x => x.Description).ToString());
+            if (!roleResult.Succeeded)
+                throw new Exception(roleResult.Errors.Select(x => x.Description).ToString());
         }
 
         public async Task<AppUser> GetUserAsync()
