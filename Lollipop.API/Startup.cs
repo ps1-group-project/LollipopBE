@@ -119,7 +119,8 @@ namespace Lollipop.API
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            string[] roleNames = { "Admin", "User" };
+
+            List<string> roleNames = this.Configuration.GetSection("Roles").Get<List<string>>();
 
             foreach(string role in roleNames)
             {

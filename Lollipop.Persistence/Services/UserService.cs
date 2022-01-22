@@ -103,6 +103,7 @@ namespace Lollipop.Persistence.Services
                 Email = email,
                 PhoneNumber = phoneNumber
             };
+
             IdentityResult result = await _userManager.CreateAsync(user, password);
 
             if (!result.Succeeded)
