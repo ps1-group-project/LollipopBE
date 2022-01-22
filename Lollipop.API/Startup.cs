@@ -59,11 +59,16 @@ namespace Lollipop.API
             services.AddDbContext<LollipopDbContext>(
                 //options => options.UseSqlServer(Configuration.GetConnectionString("local_sql_lollipop")
                 options => options.UseNpgsql(Configuration.GetConnectionString("postgre_sql_lollipop")
-                ));
-            services.AddIdentity<AppUser, IdentityRole>(options => {
+                
+                )) ;
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<LollipopDbContext>().AddDefaultTokenProviders();
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<LollipopDbContext>()
+                .AddDefaultTokenProviders();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lollipop.API", Version = "v1" }); });
             services.AddMediatR(typeof(CreateKeywordCommand).Assembly);
             services.AddAutoMapper(typeof(UserProfile).Assembly);
@@ -74,7 +79,7 @@ namespace Lollipop.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -109,6 +114,22 @@ namespace Lollipop.API
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            CreateRoles(serviceProvider).Wait();
+        }
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string[] roleNames = { "Admin", "User" };
+
+            foreach(string role in roleNames)
+            {
+                var roleExists = await roleManager.RoleExistsAsync(role);
+                if (!roleExists)
+                {
+                    var roleResult = await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+
         }
     }
 }
