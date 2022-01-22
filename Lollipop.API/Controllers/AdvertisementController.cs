@@ -39,5 +39,13 @@
         [HttpPut]
         public async Task Update([FromBody] UpdateAdvertisementCommand command) =>
             await _mediator.Send(command);
+
+        [HttpPost]
+        public async Task AddCategory([FromBody] AddAdvertCategoryCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpDelete]
+        public async Task DeleteCategory([FromBody] DeleteAdvertCategoryCommand command) =>
+            await _mediator.Send(command);
     }
 }
