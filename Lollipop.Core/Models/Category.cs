@@ -41,5 +41,15 @@
         {
             return new(name);
         }
+
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public void SetAttributes( IEnumerable<AttributeC> attributes)
+        {
+            Attributes = attributes;
+        }
     }
 }

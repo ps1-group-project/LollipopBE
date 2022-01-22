@@ -51,5 +51,6 @@
         {
             return new(userId, targetId, content);
         }
+
     }
 }

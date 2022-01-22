@@ -18,17 +18,25 @@
         {
             _mediator = mediator;
         }
-        /*
-        [HttpPost]
-        public async Task CreateCategory([FromBody] CreateCategoryCommand command) =>
-            await _mediator.Send(command);
-        */
+        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories([FromQuery] GetCategoriesQuery query) =>
+        public async Task<ActionResult<IEnumerable<Category>>> GetAll([FromQuery] GetCategoriesQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpGet]
-        public async Task<ActionResult> GetCategoryById([FromQuery] GetCategoryByIdQuery query) =>
+        public async Task<ActionResult> GetById([FromQuery] GetCategoryByIdQuery query) =>
             Ok(await _mediator.Send(query));
+
+        [HttpPost]
+        public async Task Create([FromBody] CreateCategoryCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpDelete]
+        public async Task Delete([FromBody] DeleteCategoryCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpPut]
+        public async Task Update([FromBody] UpdateCategoryCommand command) =>
+            await _mediator.Send(command);
     }
 }

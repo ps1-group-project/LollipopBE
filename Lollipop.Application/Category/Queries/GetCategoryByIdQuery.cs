@@ -1,8 +1,11 @@
 ﻿namespace Lollipop.Application.Category.Queries
 {
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Lollipop.Application.Repository;
+    using Lollipop.Application.Category.Validators;
+    using FluentValidation;
     using Lollipop.Core.Models;
     using MediatR;
     public class GetCategoryByIdQuery : IRequest<Category>
@@ -21,7 +24,9 @@
 
             public async Task<Category> Handle(GetCategoryByIdQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.GetByIdAsync(query.Id);
+                await new GetCategoryByIdValidator().ValidateAndThrowAsync(query, cancellationToken);
+                //return await _repository.GetByIdAsync(query.Id);
+                return (await _repository.GetAll(c => c.Id == query.Id, null, "Attributes,Advertisements")).Single();
 
             }
         }
