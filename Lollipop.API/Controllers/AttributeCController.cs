@@ -19,23 +19,23 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAttributes([FromQuery] GetAttributesCQuery query) =>
+        public async Task<ActionResult<IEnumerable<Category>>> GetAll([FromQuery] GetAttributesCQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpGet]
-        public async Task<ActionResult> GetAttributeById([FromQuery] GetAttributeByIdQuery query) =>
+        public async Task<ActionResult> GetById([FromQuery] GetAttributeByIdQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpPost]
-        public async Task CreateAttribute([FromBody] CreateAttributeCommand command) =>
+        public async Task Create([FromBody] CreateAttributeCommand command) =>
             await _mediator.Send(command);
 
         [HttpDelete]
-        public async Task DeleteAttribute([FromBody] DeleteAttributeCommand command) =>
+        public async Task Delete([FromBody] DeleteAttributeCommand command) =>
             await _mediator.Send(command);
 
         [HttpPut]
-        public async Task UpdateAttribute([FromBody] UpdateAttributeCommand command) =>
+        public async Task Update([FromBody] UpdateAttributeCommand command) =>
             await _mediator.Send(command);
     }
 }

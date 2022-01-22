@@ -5,6 +5,8 @@
     using Lollipop.Application.Repository;
     using Lollipop.Core.Models;
     using MediatR;
+    using FluentValidation;
+    using Lollipop.Application.Message.Validators;
 
     public class CreateMessageCommand : IRequest<int>
     {
@@ -20,6 +22,8 @@
             }
             public async Task<int> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
             {
+                await new CreateMessageValidator().ValidateAndThrowAsync(request, cancellationToken);
+
                 Message message = Message.Create(request.AuthorId, request.TargetId, request.Content);
                 await _repository.AddAsync(message);
                 return message.Id;

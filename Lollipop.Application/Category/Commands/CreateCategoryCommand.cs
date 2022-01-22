@@ -6,6 +6,7 @@
     using FluentValidation;
     using Lollipop.Core.Models;
     using Lollipop.Application.Repository;
+    using Lollipop.Application.Category.Validators;
     using System.Collections.Generic;
 
     public class CreateCategoryCommand : IRequest<int>
@@ -24,7 +25,7 @@
             
             public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
-                //await new CreateCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
+                await new CreateCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
 
                 
                 Category category = Category.Create(request.Name);

@@ -3,7 +3,9 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Lollipop.Application.Repository;
+    using Lollipop.Application.AttributeC.Validators;
     using Lollipop.Core.Models;
+    using FluentValidation;
     using MediatR;
     public class CreateAttributeCommand : IRequest<int>
     {
@@ -20,6 +22,8 @@
 
             public async Task<int> Handle(CreateAttributeCommand request, CancellationToken cancellationToken)
             {
+                await new CreateAttributeValidator().ValidateAndThrowAsync(request, cancellationToken);
+
                 AttributeC attribute = AttributeC.Create(request.Name, request.Type);
                 await _repository.AddAsync(attribute);
                 return attribute.Id;

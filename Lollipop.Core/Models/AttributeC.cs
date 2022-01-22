@@ -17,7 +17,7 @@
         /// </summary>
         public string Type { get; private set; }
 
-        public AttributeC(string name, string type)
+        private AttributeC(string name, string type)
         {
             Name = name;
             Type = type;
@@ -34,9 +34,12 @@
             return new(name, type);
         }
 
-        public void Edit(string name, string type)
+        public void SetName(string name)
         {
             Name = name;
+        }
+        public void SetType(string type)
+        {
             Type = type;
         }
     }

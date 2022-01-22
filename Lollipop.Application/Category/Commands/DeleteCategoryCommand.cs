@@ -6,6 +6,8 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using FluentValidation;
+    using Lollipop.Application.Category.Validators;
 
     public class DeleteCategoryCommand : IRequest<int>
     {
@@ -23,7 +25,7 @@
 
             public async Task<int> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
             {
-                //await new DeleteCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
+                await new DeleteCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
 
                 Category category = (await _repository.GetAll(c => c.Id == request.Id, null, "Attributes,Advertisements")).Single();
                 await _repository.DeleteAsync(category);

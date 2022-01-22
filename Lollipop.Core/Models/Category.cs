@@ -42,9 +42,13 @@
             return new(name);
         }
 
-        public void Edit(string name, IEnumerable<AttributeC> attributes)
+        public void SetName(string name)
         {
             Name = name;
+        }
+
+        public void SetAttributes( IEnumerable<AttributeC> attributes)
+        {
             Attributes = attributes;
         }
     }

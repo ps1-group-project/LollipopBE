@@ -26,6 +26,14 @@
         public async Task<ActionResult> GetById([FromQuery] GetMessageByIdQuery query) =>
             Ok(await _mediator.Send(query));
 
+        [HttpGet]
+        public async Task<ActionResult> GetAllForTarget([FromQuery] GetAllForTargetQuery query) =>
+            Ok(await _mediator.Send(query));
+
+        [HttpGet]
+        public async Task<ActionResult> GetAllForAuthor([FromQuery] GetAllForAuthorQuery query) =>
+            Ok(await _mediator.Send(query));
+
         [HttpPost]
         public async Task Create([FromBody] CreateMessageCommand command) =>
             await _mediator.Send(command);
@@ -34,8 +42,5 @@
         public async Task Delete([FromBody] DeleteMessageCommand command) =>
             await _mediator.Send(command);
 
-        [HttpPut]
-        public async Task Update([FromBody] UpdateMessageCommand command) =>
-            await _mediator.Send(command);
     }
 }

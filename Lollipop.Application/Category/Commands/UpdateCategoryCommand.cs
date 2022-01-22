@@ -8,6 +8,7 @@
     using Lollipop.Application.Repository;
     using System.Collections.Generic;
     using System.Linq;
+    using Lollipop.Application.Category.Validators;
 
     public class UpdateCategoryCommand : IRequest<int>
     {
@@ -26,10 +27,11 @@
 
             public async Task<int> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
             {
-                //await new UpdateCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
+                await new UpdateCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
                 
                 Category category = await _repository.GetByIdAsync(request.Id);
-                category.Edit(request.Name, request.Attributes);
+                category.SetName(request.Name);
+                category.SetAttributes(request.Attributes);
 
                 await _repository.UpdateAsync(category);
 
