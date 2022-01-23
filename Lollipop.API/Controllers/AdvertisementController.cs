@@ -39,5 +39,13 @@
         [HttpPut]
         public async Task Update([FromBody] UpdateAdvertisementCommand command) =>
             await _mediator.Send(command);
+
+        [HttpPost]
+        public async Task AddKeyword([FromBody] AddAdvertKeywordCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpDelete]
+        public async Task DeleteKeyword([FromBody] DeleteAdvertKeywordCommand command) =>
+            await _mediator.Send(command);
     }
 }

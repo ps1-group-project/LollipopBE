@@ -15,10 +15,10 @@
     public class UpdateAdvertisementCommand : IRequest<int>
     {
         public int Id { get; init; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public IEnumerable<Category> categories { get; set; }
-        public IEnumerable<Keyword> keywords { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Keyword> Keywords { get; set; }
         public class Handler : IRequestHandler<UpdateAdvertisementCommand, int>
         {
             private readonly IRepository<Advertisement> _repository;
@@ -30,8 +30,8 @@
             {
                 await new UpdateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
                 Advertisement toUpdate = await _repository.GetByIdAsync(request.Id);
-                toUpdate.SetTitle(request.title);
-                toUpdate.SetContent(request.content);
+                toUpdate.SetTitle(request.Title);
+                toUpdate.SetContent(request.Content);
                 await _repository.UpdateAsync(toUpdate);
                 return toUpdate.Id;
             }
