@@ -90,7 +90,9 @@ namespace Lollipop.API
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lollipop.API v1"));
+                //app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -101,7 +103,8 @@ namespace Lollipop.API
                 //.WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000")
                 //.AllowAnyOrigin()
                 .SetIsOriginAllowed(_ => true)
-                .AllowCredentials());
+                .AllowCredentials()
+                );
 
             app.UseRouting();
 

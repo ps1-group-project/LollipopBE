@@ -157,6 +157,14 @@ namespace Lollipop.API.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetDetails()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user != null) return Ok(user);
+            else return StatusCode(500, "User not logged in");
+        }
+
         [HttpPost]
         public async Task<IActionResult> New(string email, string password, string firstName, string lastName, string userName)
         {
