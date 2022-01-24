@@ -1,6 +1,7 @@
 ﻿namespace Lollipop.Core.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Category
     {
@@ -47,19 +48,18 @@
             Name = name;
         }
 
-        public void AddAttribute(AttributeC a)
+        public void AddAttribute(AttributeC attribute)
         {
-            if (!Attributes.Contains(a)){
-                Attributes.Add(a);
+            if (!Attributes.Contains(attribute))
+            {
+                Attributes.Add(attribute);
             }
         }
 
-        public void RemoveAttribute(AttributeC a)
+        public void RemoveAttribute(AttributeC attribute)
         {
-            if (Attributes.Contains(a))
-            {
-                Attributes.Remove(a);
-            }
+            Attributes.Remove(attribute);
         }
+
     }
 }

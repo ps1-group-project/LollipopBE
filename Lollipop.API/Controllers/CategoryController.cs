@@ -38,5 +38,13 @@
         [HttpPut]
         public async Task Update([FromBody] UpdateCategoryCommand command) =>
             await _mediator.Send(command);
+
+        [HttpPost]
+        public async Task AddAttribute([FromBody] AddCatAttributeCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpDelete]
+        public async Task DeleteAttribute([FromBody] DeleteCatAttributeCommand command) =>
+            await _mediator.Send(command);
     }
 }

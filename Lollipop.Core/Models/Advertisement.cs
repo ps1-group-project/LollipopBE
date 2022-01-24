@@ -86,7 +86,7 @@
 
         public void AddKeyword(Keyword keyword)
         {
-            if (Keywords.Contains(keyword))
+            if (!Keywords.Contains(keyword))
             {
                 Keywords.Add(keyword);
             }
