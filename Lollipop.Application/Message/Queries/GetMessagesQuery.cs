@@ -20,7 +20,7 @@
 
             public async Task<IEnumerable<Message>> Handle(GetMessagesQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.GetAll();
+                return await _repository.GetAllAsync();
             }
         }
     }

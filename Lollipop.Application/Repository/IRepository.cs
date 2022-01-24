@@ -5,17 +5,19 @@ namespace Lollipop.Application.Repository
     using System;
     using System.Linq.Expressions;
     using System.Linq;
+    using Lollipop.Core.Specification;
 
-    public interface IRepository<T> //where T : class
+    public interface IRepository<T>
     {
-        Task<IEnumerable<T>> GetAll(
-            Expression<Func<T, bool>> filter = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeProperties = "");
+
+        List<T> GetAll(IBaseSpecification<T> specification = null);
+        int GetCount(IBaseSpecification<T> specification = null);
+        Task<List<T>> GetAllAsync(IBaseSpecification<T> specification = null);
         Task<T> GetByIdAsync(int id);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task DeleteAsync(int id);
+
     }
 }

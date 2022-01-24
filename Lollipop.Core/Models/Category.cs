@@ -53,8 +53,7 @@
             if (!Attributes.Contains(attribute))
             {
                 Attributes.Add(attribute);
-            }
-        }
+
 
         public void RemoveAttribute(AttributeC attribute)
         {

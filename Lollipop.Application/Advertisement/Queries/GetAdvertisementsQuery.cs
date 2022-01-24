@@ -19,7 +19,7 @@
 
             public async Task<IEnumerable<Advertisement>> Handle(GetAdvertisementsQuery query, CancellationToken cancellationToken)
             {
-                return await _repository.GetAll(null, null, "Categories,Keywords");
+                return await _repository.GetAllAsync();
             }
         }
     }

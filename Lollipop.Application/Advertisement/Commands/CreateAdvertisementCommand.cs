@@ -12,11 +12,11 @@
 
     public class CreateAdvertisementCommand : IRequest<int>
     {
-        public int userId { get; init; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public IEnumerable<Category> categories { get; set; }
-        public IEnumerable<Keyword> keywords { get; set; }
+        public int UserId { get; init; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Keyword> Keywords { get; set; }
 
         public class Handler : IRequestHandler<CreateAdvertisementCommand, int>
         {
@@ -29,7 +29,7 @@
             {
                 await new CreateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
 
-                Advertisement advert = Advertisement.Create(request.userId, request.title, request.content);
+                Advertisement advert = Advertisement.Create(request.UserId, request.Title, request.Content);
                 await _repository.AddAsync(advert);
                 
                 return advert.Id;

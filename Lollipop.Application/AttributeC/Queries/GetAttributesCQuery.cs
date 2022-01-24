@@ -23,7 +23,7 @@
 
             public async Task<IEnumerable<AttributeDto>> Handle(GetAttributesCQuery query, CancellationToken cancellationToken)
             {
-                IEnumerable <AttributeC> attributes = await _repository.GetAll();
+                IEnumerable <AttributeC> attributes = await _repository.GetAllAsync();
                 return _mapper.Map <IEnumerable<AttributeDto>> (attributes);
             }
         }

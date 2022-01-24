@@ -47,5 +47,13 @@
         [HttpDelete]
         public async Task DeleteCategory([FromBody] DeleteAdvertCategoryCommand command) =>
             await _mediator.Send(command);
+            
+        [HttpPost]
+        public async Task AddKeyword([FromBody] AddAdvertKeywordCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpDelete]
+        public async Task DeleteKeyword([FromBody] DeleteAdvertKeywordCommand command) =>
+            await _mediator.Send(command);
     }
 }

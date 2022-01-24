@@ -27,7 +27,7 @@
             {
                 await new DeleteCategoryValidator().ValidateAndThrowAsync(request, cancellationToken);
 
-                Category category = (await _repository.GetAll(c => c.Id == request.Id, null, "Attributes,Advertisements")).Single();
+                Category category = await _repository.GetByIdAsync(request.Id);
                 await _repository.DeleteAsync(category);
 
                 return category.Id;
