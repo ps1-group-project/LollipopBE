@@ -37,6 +37,7 @@ namespace Lollipop.API.Controllers
     using Microsoft.AspNetCore.Identity;
     using Lollipop.API.Filters;
     using Lollipop.Persistence.Exceptions;
+    [CORSActionFilter]
     [ExceptionFilter]
     [AllowAnonymous]
     [Route("[controller]/[action]")]

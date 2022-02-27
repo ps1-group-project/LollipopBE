@@ -8,8 +8,10 @@
     using Lollipop.Application.Category.Queries;
     using Lollipop.Core.Models;
     using Microsoft.AspNetCore.Cors;
+    using Lollipop.API.Filters;
 
     [ApiController]
+    [CORSActionFilter]
     [Route("[controller]/[action]")]
     public class CategoryController : Controller
     {

@@ -27,6 +27,7 @@ namespace Lollipop.API
     using Lollipop.Application.MapperProfile;
     using Lollipop.Persistence.Services;
     using Lollipop.Application.Service;
+    using Microsoft.AspNetCore.Cors.Infrastructure;
 
     public class Startup
     {
@@ -53,6 +54,10 @@ namespace Lollipop.API
               options.ClientId = "996066867520-1npd5tcf3hqljfv8jj5spri40srqm2ro.apps.googleusercontent.com";
               options.ClientSecret = "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";
           });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", GenerateCorsPolicy());
+            });
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -94,17 +99,18 @@ namespace Lollipop.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lollipop.API v1"));
                 //app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseCors(x => x
+            app.UseCors("AllowAllOrigins");
+            /*app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 //.WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000")
-                //.AllowAnyOrigin()
+                .AllowAnyOrigin()
                 .SetIsOriginAllowed(_ => true)
-                .AllowCredentials()
-                );
+                );*/
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            
 
             app.UseRouting();
 
@@ -134,6 +140,15 @@ namespace Lollipop.API
                 }
             }
 
+        }
+        public CorsPolicy GenerateCorsPolicy()
+        {
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000", "https://lollipop-fe-main.herokuapp.com");
+            corsBuilder.AllowCredentials();
+            return corsBuilder.Build();
         }
     }
 }

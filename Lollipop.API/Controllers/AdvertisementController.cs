@@ -9,6 +9,7 @@
     using Lollipop.Core.Models;
     using Lollipop.API.Filters;
 
+    [CORSActionFilter]
     [ExceptionFilter]
     [ApiController]
     [Route("[controller]/[action]")]

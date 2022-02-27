@@ -4,10 +4,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Lollipop.Application.User.Commands;
 using Lollipop.Application.User.Queries;
+using Lollipop.API.Filters;
 
 namespace Lollipop.API.Controllers
 {
     //[Authorize]//do odkomentowania gdy front ogarnie, że musi być zalogowany by pobrac liste
+    [CORSActionFilter]
     [ApiController]
     [Route("[controller]/[action]")]
     public class UserController : ControllerBase

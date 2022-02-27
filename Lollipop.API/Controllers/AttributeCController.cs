@@ -7,7 +7,9 @@
     using Lollipop.Application.AttributeC.Queries;
     using Lollipop.Application.AttributeC.Commands;
     using Lollipop.Core.Models;
+    using Lollipop.API.Filters;
 
+    [CORSActionFilter]
     [ApiController]
     [Route("Attribute/[action]")]
     public class AttributeCController : Controller

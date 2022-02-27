@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lollipop.Persistence.DbContext;
 using Lollipop.Core.Models;
+using Lollipop.API.Filters;
 
 namespace Lollipop.API.Controllers
 {
+    [CORSActionFilter]
     [Route("[controller]/[action]")]
     public class TokenController : ControllerBase
     {

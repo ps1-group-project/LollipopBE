@@ -7,7 +7,9 @@
     using Lollipop.Application.ForbiddenWord.Queries;
     using Lollipop.Core.Models;
     using Lollipop.Application.ForbiddenWord.Commands;
+    using Lollipop.API.Filters;
 
+    [CORSActionFilter]
     [ApiController]
     [Route("[controller]/[action]")]
     public class ForbiddenWordController : Controller

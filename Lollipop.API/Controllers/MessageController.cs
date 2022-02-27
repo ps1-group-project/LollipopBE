@@ -7,8 +7,10 @@
     using Lollipop.Application.Message.Commands;
     using Lollipop.Application.Message.Queries;
     using Lollipop.Core.Models;
+    using Lollipop.API.Filters;
 
     [ApiController]
+    [CORSActionFilter]
     [Route("[controller]/[action]")]
     public class MessageController : Controller
     {

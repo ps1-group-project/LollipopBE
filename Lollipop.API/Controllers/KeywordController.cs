@@ -10,6 +10,7 @@
     using Lollipop.API.Filters;
 
     [ExceptionFilter]
+    [CORSActionFilter]
     [ApiController]
     [Route("[controller]/[action]")]
     public class KeywordController : ControllerBase
