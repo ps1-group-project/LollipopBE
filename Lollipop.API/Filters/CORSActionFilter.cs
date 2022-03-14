@@ -15,7 +15,8 @@ namespace Lollipop.API.Filters
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "https://projektz-46d76.web.app, http://localhost:3000, https://lollipop-fe-main.herokuapp.com");
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "X-Requested-With, Accept, Access-Control-Allow-Origin, Content-Type,Access-Control-Allow-Headers, Authorization");
-            base.OnActionExecuting(filterContext);
+                filterContext.HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Set-Cookie");
+                base.OnActionExecuting(filterContext);
         }
     }
 }
