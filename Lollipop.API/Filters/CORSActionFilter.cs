@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,11 @@ namespace Lollipop.API.Filters
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "X-Requested-With, Accept, Access-Control-Allow-Origin, Content-Type,Access-Control-Allow-Headers, Authorization");
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Set-Cookie");
-                base.OnActionExecuting(filterContext);
+                filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+
+
+
+            base.OnActionExecuting(filterContext);
         }
     }
 }

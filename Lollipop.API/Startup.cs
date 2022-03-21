@@ -48,6 +48,7 @@ namespace Lollipop.API
           .AddCookie(options =>
           {
               options.LoginPath = "/account/google-login";
+              
           })
           .AddGoogle(options =>
           {
@@ -99,14 +100,14 @@ namespace Lollipop.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lollipop.API v1"));
                 //app.UseHsts();
             }
-            app.UseCors("AllowAllOrigins");
-            /*app.UseCors(x => x
+            //app.UseCors("AllowAllOrigins");
+            app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 //.WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000")
                 .AllowAnyOrigin()
                 .SetIsOriginAllowed(_ => true)
-                );*/
+                );
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
