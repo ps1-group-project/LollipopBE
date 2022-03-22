@@ -48,6 +48,19 @@ namespace Lollipop.API
           .AddCookie(options =>
           {
               options.LoginPath = "/account/google-login";
+              options.LoginPath = "/account/google-login";
+              options.Cookie.Name = "UserLoginCookie";  
+              options.SlidingExpiration = true;  
+              options.ExpireTimeSpan = new TimeSpan(1, 0, 0); // Expires in 1 hour  
+              options.Events.OnRedirectToLogin = (context) =>  
+              {  
+                  context.Response.StatusCode = StatusCodes.Status401Unauthorized;  
+                  return Task.CompletedTask;  
+              };  
+  
+              options.Cookie.HttpOnly = true;  
+              // Only use this when the sites are on different domains  
+              options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
               
           })
           .AddGoogle(options =>
@@ -57,7 +70,7 @@ namespace Lollipop.API
           });
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigins", GenerateCorsPolicy());
+                
             });
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -141,15 +154,6 @@ namespace Lollipop.API
                 }
             }
 
-        }
-        public CorsPolicy GenerateCorsPolicy()
-        {
-            var corsBuilder = new CorsPolicyBuilder();
-            corsBuilder.AllowAnyHeader();
-            corsBuilder.AllowAnyMethod();
-            corsBuilder.WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000", "https://lollipop-fe-main.herokuapp.com");
-            corsBuilder.AllowCredentials();
-            return corsBuilder.Build();
         }
     }
 }

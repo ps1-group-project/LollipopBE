@@ -19,9 +19,7 @@ namespace Lollipop.API.Filters
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "X-Requested-With, Accept, Access-Control-Allow-Origin, Content-Type,Access-Control-Allow-Headers, Authorization");
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Set-Cookie");
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
-
-            //filterContext.HttpContext.SignInAsync()
-
+                
             base.OnActionExecuting(filterContext);
         }
     }
