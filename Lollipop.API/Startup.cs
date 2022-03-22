@@ -47,8 +47,7 @@ namespace Lollipop.API
             })
           .AddCookie(options =>
           {
-              options.LoginPath = "/account/google-login";
-              options.LoginPath = "/account/google-login";
+              // options.LoginPath = "/account/google-login";
               options.Cookie.Name = "UserLoginCookie";  
               options.SlidingExpiration = true;  
               options.ExpireTimeSpan = new TimeSpan(1, 0, 0); // Expires in 1 hour  
