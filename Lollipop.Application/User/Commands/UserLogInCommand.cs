@@ -30,6 +30,7 @@ namespace Lollipop.Application.User.Commands
 
                 await _userService.PasswordSignInAsync(request.UserName, request.Password, false);
 
+                
                 return Unit.Value;
             }
         }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Lollipop.API.Filters
 {
@@ -19,7 +20,7 @@ namespace Lollipop.API.Filters
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Set-Cookie");
                 filterContext.HttpContext.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
 
-
+            //filterContext.HttpContext.SignInAsync()
 
             base.OnActionExecuting(filterContext);
         }
