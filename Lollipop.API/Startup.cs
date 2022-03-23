@@ -113,6 +113,13 @@ namespace Lollipop.API
                 //app.UseHsts();
             }
             //app.UseCors("AllowAllOrigins");
+            
+            // Tells the app to transmit the cookie through HTTPS only.  
+            app.UseCookiePolicy(  
+                new CookiePolicyOptions  
+                {  
+                    Secure = CookieSecurePolicy.Always  
+                });
             app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
