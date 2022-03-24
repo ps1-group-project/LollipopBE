@@ -71,6 +71,10 @@ namespace Lollipop.API
             {
                 
             });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+            });
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(XmlConfigurationExtensions => XmlConfigurationExtensions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -83,6 +87,7 @@ namespace Lollipop.API
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
+                
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<LollipopDbContext>()
@@ -123,9 +128,10 @@ namespace Lollipop.API
             app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                //.WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000")
-                .AllowAnyOrigin()
+                .WithOrigins("https://projektz-46d76.web.app", "http://localhost:3000", "https://lollipop-fe-main.herokuapp.com")
+                //.AllowAnyOrigin()
                 .SetIsOriginAllowed(_ => true)
+                .AllowCredentials()
                 );
             app.UseHttpsRedirection();
             app.UseStaticFiles();
