@@ -29,7 +29,7 @@ namespace Lollipop.Application.User.Commands
                 await new UserLogInValidator().ValidateAndThrowAsync(request, cancellationToken);
 
                 await _userService.PasswordSignInAsync(request.UserName, request.Password, false);
-
+                
                 return Unit.Value;
             }
         }

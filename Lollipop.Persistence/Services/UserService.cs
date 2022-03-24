@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Security;
 using System.Security.Claims;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 using Lollipop.Application.Service;
 using Lollipop.Core.Models;
 using Lollipop.Persistence.DbContext;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
@@ -49,6 +52,7 @@ namespace Lollipop.Persistence.Services
         public async Task SingOutAsync()
         {
             await _signInManager.SignOutAsync();
+            await _accessor.HttpContext.SignOutAsync();
         }
 
         public async Task ChangeEmailAsync(string newEmail)
@@ -84,7 +88,7 @@ namespace Lollipop.Persistence.Services
         {
             AppUser user = await _userManager.FindByNameAsync(userName);
             SignInResult result = await _signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure);
-
+            
             if (!result.Succeeded)
             {
                 throw new Exception(string.Join(
@@ -93,6 +97,13 @@ namespace Lollipop.Persistence.Services
                         "IsNotAllowed: " + result.IsNotAllowed,
                         "IsLockedOut: " + result.IsLockedOut));
             }
+            var claims = await _userManager.GetClaimsAsync(user);
+            
+            var claimsIdentity = new ClaimsIdentity(  
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            
+            await _accessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity));
         }
 
         public async Task RegisterUserAsync(string userName, string email, string phoneNumber, string password)
