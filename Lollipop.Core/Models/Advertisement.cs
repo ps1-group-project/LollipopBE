@@ -93,6 +93,11 @@
             }
         }
 
+        public void RemoveKeyword(Keyword keyword)
+        {
+            Keywords.Remove(keyword);
+        }
+
         public void RemoveImage(AdvImage im)
         {
             Images.Remove(im);
