@@ -1,11 +1,7 @@
 ﻿namespace Lollipop.Core.Models
 {
-    public class AttributeC
+    public class AttributeC : Base
     {
-        /// <summary>
-        /// Attribute identifier.
-        /// </summary>
-        public int Id { get; private set; }
 
         /// <summary>
         /// Attribute name.

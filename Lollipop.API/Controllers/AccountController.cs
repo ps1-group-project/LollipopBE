@@ -62,7 +62,7 @@ namespace Lollipop.API.Controllers
         }
         //swagger doesn't like it to not have here http method
         //if we want the authorization works, we have to delte those
-        [HttpGet]
+        /*[HttpGet]//commented till its properly organized with UserController
         public IActionResult GoogleLogin()
         {
             var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
@@ -158,13 +158,7 @@ namespace Lollipop.API.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetDetails()
-        {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            if (user != null) return Ok(user);
-            else return StatusCode(500, "User not logged in");
-        }
+        
 
         [HttpPost]
         public async Task<IActionResult> New(string email, string password, string firstName, string lastName, string userName)
@@ -212,6 +206,15 @@ namespace Lollipop.API.Controllers
             }
 
             throw new UserNotFoundException("WrongEmail");
+        }
+
+        */
+        [HttpGet]
+        public async Task<IActionResult> GetDetails()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user != null) return Ok(user);
+            else return StatusCode(500, "User not logged in");
         }
     }
 }

@@ -6,7 +6,7 @@
     {
         public UpdateAdvertisementValidator()
         {
-            RuleFor(x => x.Id)
+            RuleFor(x => x.AdvertId)
                 .GreaterThanOrEqualTo(0)
                 .WithMessage("Advertisement Id cannot be negative");
         }

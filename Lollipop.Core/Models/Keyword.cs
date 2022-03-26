@@ -1,12 +1,9 @@
 ﻿namespace Lollipop.Core.Models
 {
     using System.Collections.Generic;
-    public class Keyword
+    public class Keyword : Base
     {
-        /// <summary>
-        /// Keyword identifier.
-        /// </summary>
-        public int Id { get; private set; }
+
 
         /// <summary>
         /// Keyword name.

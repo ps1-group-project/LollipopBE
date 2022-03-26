@@ -1,11 +1,8 @@
 ﻿namespace Lollipop.Core.Models
 {
-    public class ForbiddenWord
+    public class ForbiddenWord : Base
     {
-        /// <summary>
-        /// ForbiddenWord identifier.
-        /// </summary>
-        public int Id { get; private set; }
+
 
         /// <summary>
         /// Forbidden Word.

@@ -10,8 +10,9 @@ namespace Lollipop.Persistence.Repositories
     using System;
     using Lollipop.Persistence.Services;
     using Lollipop.Core.Specification;
+    using Lollipop.Core.Models;
 
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : Base
     {
         private readonly LollipopDbContext _dbContext;
 
@@ -21,6 +22,10 @@ namespace Lollipop.Persistence.Repositories
         {
             _dbContext = dbContext;
         }
+
+        public Task<T> GetByIdAsync(int id, IBaseSpecification<T> specification = null) =>
+           SpecificationEvaluator<T>.GetEvaluatedQuery(DbSet.Where(x => x.Id == id), specification)
+                   .FirstOrDefaultAsync();
 
         public List<T> GetAll(IBaseSpecification<T> specification = null) =>
             SpecificationEvaluator<T>.GetEvaluatedQuery(DbSet, specification).ToList();

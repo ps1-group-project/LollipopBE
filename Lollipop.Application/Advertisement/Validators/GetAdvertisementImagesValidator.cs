@@ -2,9 +2,9 @@
 {
     using FluentValidation;
     using Lollipop.Application.Advertisement.Commands;
-    public class DeleteAdvertisementValidator : AbstractValidator<DeleteAdvertisementCommand>
+    public class GetAdvertisementImagesValidator : AbstractValidator<GetAdvertisementImagesQuery>
     {
-        public DeleteAdvertisementValidator()
+        public GetAdvertisementImagesValidator()
         {
             RuleFor(x => x.AdvertId)
                 .GreaterThanOrEqualTo(0)

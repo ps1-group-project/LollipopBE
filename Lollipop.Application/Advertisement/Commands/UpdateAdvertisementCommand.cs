@@ -14,7 +14,7 @@
 
     public class UpdateAdvertisementCommand : IRequest<int>
     {
-        public int Id { get; init; }
+        public int AdvertId { get; init; }
         public string Title { get; set; }
         public string Content { get; set; }
         public IEnumerable<Category> Categories { get; set; }
@@ -29,7 +29,7 @@
             public async Task<int> Handle(UpdateAdvertisementCommand request, CancellationToken cancellationToken)
             {
                 await new UpdateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
-                Advertisement toUpdate = await _repository.GetByIdAsync(request.Id);
+                Advertisement toUpdate = await _repository.GetByIdAsync(request.AdvertId);
                 toUpdate.SetTitle(request.Title);
                 toUpdate.SetContent(request.Content);
                 await _repository.UpdateAsync(toUpdate);

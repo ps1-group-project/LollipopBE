@@ -8,7 +8,6 @@ using Lollipop.API.Filters;
 
 namespace Lollipop.API.Controllers
 {
-    //[Authorize]//do odkomentowania gdy front ogarnie, że musi być zalogowany by pobrac liste
     [CORSActionFilter]
     [ApiController]
     [Route("[controller]/[action]")]
@@ -49,7 +48,6 @@ namespace Lollipop.API.Controllers
         public async Task<IActionResult> DeleteAccount([FromQuery] UserDeleteAccountCommand command) =>
             Ok(await _mediator.Send(command));
 
-        //ta metoda pewnie bardziej nadawała by się do jakiegoś panelu admina czy cos
         [HttpGet]
         public async Task<IActionResult> GetAllUsers([FromQuery] GetAllUsersQuery query) =>
            Ok(await _mediator.Send(query));

@@ -13,7 +13,7 @@ namespace Lollipop.Application.Repository
         List<T> GetAll(IBaseSpecification<T> specification = null);
         int GetCount(IBaseSpecification<T> specification = null);
         Task<List<T>> GetAllAsync(IBaseSpecification<T> specification = null);
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(int id, IBaseSpecification<T> specification = null);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task DeleteAsync(T entity);
