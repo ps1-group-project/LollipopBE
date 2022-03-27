@@ -12,5 +12,7 @@ namespace Lollipop.Core.Models
         /// Image in a form of base64 string
         /// </summary>
         public string Base64String { get; set; }
+
+        Advertisement advertisement { get; set; }
     }
 }
