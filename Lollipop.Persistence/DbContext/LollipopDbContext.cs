@@ -15,6 +15,7 @@ namespace Lollipop.Persistence.DbContext
         public DbSet<ForbiddenWord> ForbiddenWords{get;set;}
         public DbSet<Keyword> Keywords{get;set;}
         public DbSet<Message> Messages{get;set;}
+        public DbSet<AdvImage> Images{get;set;}
 
         public LollipopDbContext(DbContextOptions<LollipopDbContext> options) : base(options)
         {

@@ -2,12 +2,8 @@
 {
     using System;
 
-    public class Message
+    public class Message : Base
     {
-        /// <summary>
-        /// Message identifier.
-        /// </summary>
-        public int Id { get; private set; }
 
         /// <summary>
         /// Author's Identifier.

@@ -2,14 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-    public class Advertisement
+    public class Advertisement : Base
     {
-        /// <summary>
-        /// Advertisement identifier.
-        /// </summary>
-        public int Id { get; private set; }
-
         /// <summary>
         /// Author's id
         /// </summary>
@@ -39,6 +35,11 @@
         /// Keywords
         /// </summary>
         public ICollection<Keyword> Keywords { get; private set; } = new List<Keyword>();
+
+        /// <summary>
+        /// Collection if images
+        /// </summary>
+        public ICollection<AdvImage> Images { get; private set; } = new List<AdvImage>();
 
         /// <summary>
         /// Creation date.
@@ -95,6 +96,19 @@
         public void RemoveKeyword(Keyword keyword)
         {
             Keywords.Remove(keyword);
+        }
+
+        public void RemoveImage(AdvImage im)
+        {
+            Images.Remove(im);
+        }
+
+        public void AddImage(AdvImage im)
+        {
+            if (!Images.Contains(im))
+            {
+                Images.Add(im);
+            }
         }
     }
 }

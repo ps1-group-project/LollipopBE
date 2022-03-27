@@ -56,5 +56,17 @@
         [HttpDelete]
         public async Task DeleteKeyword([FromBody] DeleteAdvertKeywordCommand command) =>
             await _mediator.Send(command);
+
+        [HttpPatch]
+        public async Task AddImage([FromBody] AddImageCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpDelete]
+        public async Task DeleteImage([FromBody] DeleteImageCommand command) =>
+            await _mediator.Send(command);
+
+        [HttpGet]
+        public async Task<IEnumerable<AdvImage>> GetImages([FromQuery] GetAdvertisementImagesQuery query) =>
+            await _mediator.Send(query);
     }
 }

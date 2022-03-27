@@ -3,12 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Category
+    public class Category : Base
     {
-        /// <summary>
-        /// Category identifier.
-        /// </summary>
-        public int Id { get; private set; }
+
 
         /// <summary>
         /// Category name.

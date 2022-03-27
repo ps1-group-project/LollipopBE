@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Lollipop.Application.Advertisement.Commands;
-    class DeleteKeywordValidator : AbstractValidator<DeleteAdvertKeywordCommand>
+    public class DeleteKeywordValidator : AbstractValidator<DeleteAdvertKeywordCommand>
     {
         public DeleteKeywordValidator()
         {
