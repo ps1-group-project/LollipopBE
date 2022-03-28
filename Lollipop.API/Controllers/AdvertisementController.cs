@@ -56,5 +56,9 @@
         [HttpDelete]
         public async Task DeleteKeyword([FromBody] DeleteAdvertKeywordCommand command) =>
             await _mediator.Send(command);
+
+        [HttpGet]
+        public async Task<ActionResult<List<Advertisement>>> SearchWithAttributes([FromQuery] SearchWithAttributesQuery query) =>
+            await _mediator.Send(query);
     }
 }
