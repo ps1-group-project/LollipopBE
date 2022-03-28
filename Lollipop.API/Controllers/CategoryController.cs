@@ -29,6 +29,10 @@
         public async Task<ActionResult> GetById([FromQuery] GetCategoryByIdQuery query) =>
             Ok(await _mediator.Send(query));
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategoryAttributes([FromQuery] GetCategoryAttributesQuery query) =>
+            Ok(await _mediator.Send(query));
+
         [HttpPost]
         public async Task Create([FromBody] CreateCategoryCommand command) =>
             await _mediator.Send(command);

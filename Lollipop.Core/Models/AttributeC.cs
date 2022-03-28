@@ -1,4 +1,7 @@
-﻿namespace Lollipop.Core.Models
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Lollipop.Core.Models
 {
     public class AttributeC
     {
@@ -15,32 +18,42 @@
         /// <summary>
         /// Attribute type.
         /// </summary>
-        public string Type { get; private set; }
 
-        private AttributeC(string name, string type)
+        public List<string> Values { get; private set; }
+
+        private AttributeC(string name, List<string> values)
         {
             Name = name;
-            Type = type;
+            Values= values;
         }
 
         /// <summary>
         /// Creates new attribute
         /// </summary>
         /// <param name="name">Attribute name</param>
-        /// <param name="type">Attri</param>
+        /// <param name="values">Attribute values</param>
         /// <returns></returns>
-        public static AttributeC Create(string name, string type)
+        public static AttributeC Create(string name, List<string> values)
         {
-            return new(name, type);
+            return new(name, values);
         }
 
         public void SetName(string name)
         {
             Name = name;
         }
-        public void SetType(string type)
+
+        public void AddValue(string value)
         {
-            Type = type;
+            if (!Values.Contains(value))
+            {
+                Values.Add(value);
+            }
+        }
+
+        public void RemoveValue(string value)
+        {
+            Values.Remove(value);
         }
     }
 }

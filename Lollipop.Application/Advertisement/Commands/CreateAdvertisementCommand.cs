@@ -15,7 +15,7 @@
         public int UserId { get; init; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        public Category Category { get; set; }
         public IEnumerable<Keyword> Keywords { get; set; }
 
         public class Handler : IRequestHandler<CreateAdvertisementCommand, int>
@@ -29,7 +29,7 @@
             {
                 await new CreateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
 
-                Advertisement advert = Advertisement.Create(request.UserId, request.Title, request.Content);
+                Advertisement advert = Advertisement.Create(request.UserId, request.Title, request.Content, request.Category);
                 await _repository.AddAsync(advert);
                 
                 return advert.Id;

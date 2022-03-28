@@ -7,10 +7,12 @@
     using Lollipop.Core.Models;
     using FluentValidation;
     using MediatR;
+    using System.Collections.Generic;
+
     public class CreateAttributeCommand : IRequest<int>
     {
         public string Name { get; init; }
-        public string Type { get; init; }
+        public List<string> Values { get; init; }
         public class Handler : IRequestHandler<CreateAttributeCommand, int>
         {
             private readonly IRepository<AttributeC> _repository;
@@ -24,7 +26,7 @@
             {
                 await new CreateAttributeValidator().ValidateAndThrowAsync(request, cancellationToken);
 
-                AttributeC attribute = AttributeC.Create(request.Name, request.Type);
+                AttributeC attribute = AttributeC.Create(request.Name, request.Values);
                 await _repository.AddAsync(attribute);
                 return attribute.Id;
                 

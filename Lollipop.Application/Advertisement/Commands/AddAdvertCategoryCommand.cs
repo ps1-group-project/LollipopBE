@@ -30,7 +30,7 @@
                 Advertisement advertisement = await _advertRepository.GetByIdAsync(request.AdvertId);
                 Category category = await _catRepository.GetByIdAsync(request.CategoryId);
 
-                advertisement.AddCategory(category);
+                advertisement.SetCategory(category);
                 await _advertRepository.UpdateAsync(advertisement);
 
                 return category.Id;

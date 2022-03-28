@@ -11,11 +11,7 @@ namespace Lollipop.Persistence.Configurations
         {
             builder
                 .HasMany(x => x.Advertisements)
-                .WithMany(x => x.Categories)
-                .UsingEntity<AdvertisementCategory>
-                    (x => x.HasOne(x => x.Advertisement).WithMany().HasForeignKey(x => x.AdvertisementId),
-                    x => x.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId));
-                    
+                .WithOne(x => x.Category);
         }
     }
 }

@@ -27,7 +27,7 @@
 
                 AttributeC attribute = await _repository.GetByIdAsync(request.Id);
                 attribute.SetName(request.Name);
-                attribute.SetType(request.Type);
+                attribute.AddValue(request.Type);
                 await _repository.UpdateAsync(attribute);
                 return attribute.Id;
 

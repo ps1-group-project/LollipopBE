@@ -61,5 +61,10 @@
             Attributes.Remove(attribute);
         }
 
+        public IEnumerable<AttributeC> GetAllAttributes()
+        {
+            return Attributes;
+        }
+
     }
 }

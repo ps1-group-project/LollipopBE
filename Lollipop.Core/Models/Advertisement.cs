@@ -33,7 +33,9 @@
         /// <summary>
         /// Categories
         /// </summary>
-        public ICollection<Category> Categories { get; private set; } = new List<Category>();
+        /// 
+        public Category Category { get; private set; }
+
 
         /// <summary>
         /// Keywords
@@ -46,14 +48,16 @@
         public DateTime CreationDate { get; private set; }
         public void SetTitle(string title) => this.Title = title;
         public void SetContent(string content) => this.Content = content;
+        public void SetCategory(Category category) => this.Category = category;
         private Advertisement(){}
 
-        private Advertisement(int userId, string title, string content)
+        private Advertisement(int userId, string title, string content, Category category)
         {
             UserId = userId;
             VisitorCounter = 0;
             Title = title;
             Content = content;
+            Category = category;
             CreationDate = DateTime.Now;
         }
 
@@ -63,25 +67,12 @@
         /// <param name="userId">User identifier</param>
         /// <param name="title">Advertisement title</param>
         /// <param name="content">Content</param>
-        /// <param name="categories">Categories</param>
+        /// <param name="category">Category</param>
         /// <param name="keywords">Keywords</param>
         /// <returns>New advertisement</returns>
-        public static Advertisement Create(int userId, string title, string content)
+        public static Advertisement Create(int userId, string title, string content, Category category)
         {
-            return new(userId, title, content);
-        }
-
-        public void AddCategory(Category cat)
-        {
-            if (!Categories.Contains(cat))
-            {
-                Categories.Add(cat);
-            }
-        }
-
-        public void RemoveCategory(Category cat)
-        {
-            Categories.Remove(cat);
+            return new(userId, title, content, category);
         }
 
         public void AddKeyword(Keyword keyword)

@@ -12,7 +12,7 @@
             RuleFor(x => x.Content)
                 .NotNull()
                 .WithMessage("Advertisement content cannot be null");
-            RuleFor(x => x.Categories)
+            RuleFor(x => x.Category)
                 .NotNull()
                 .WithMessage("Advertisement must have category");
             RuleFor(x => x.UserId)
