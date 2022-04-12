@@ -8,34 +8,37 @@ namespace Lollipop.Application.Advertisement.Queries
     using Lollipop.Core.Models;
     using MediatR;
     using System.Collections.Generic;
-    public class SearchAdvertistementQuery : IRequest<IEnumerable<Advertisement>>
+    public class SearchAdvertisementsQuery : IRequest<IEnumerable<Advertisement>>
     {
         public string Title { get; init; }
-        public Category Category { get; init; }
+        public int CategoryId { get; init; }
         public IEnumerable<AttributeC> Attributes { get; init; }
         
-        public class Handler : IRequestHandler<SearchAdvertistementQuery, IEnumerable<Advertisement>>
+        public class Handler : IRequestHandler<SearchAdvertisementsQuery, IEnumerable<Advertisement>>
         {
-            private readonly IRepository<Advertisement> _repository;
+            private readonly IRepository<Advertisement> _AdvRepository;
+            private readonly IRepository<Category> _CatRepository;
 
-            public Handler(IRepository<Advertisement> repository)
+            public Handler(IRepository<Advertisement> AdvRepository, IRepository<Category> CatRepository)
             {
-                _repository = repository;
+                _AdvRepository = AdvRepository;
+                _CatRepository = CatRepository;
             }
 
-            public async Task<IEnumerable<Advertisement>> Handle(SearchAdvertistementQuery query, CancellationToken cancellationToken)
+            public async Task<IEnumerable<Advertisement>> Handle(SearchAdvertisementsQuery query, CancellationToken cancellationToken)
             {
-                List<Advertisement> adverts = await _repository.GetAllAsync();
+                List<Advertisement> adverts = await _AdvRepository.GetAllAsync();
                 IEnumerable<Advertisement> searchResults;
+                Category cat = await _CatRepository.GetByIdAsync(query.CategoryId);
                 //only name
-                if (query.Title != null && query.Category == null)
+                if (query.Title != null && cat == null)
                 {
                     searchResults = adverts.Where(x => x.Title.Contains(query.Title));
                 }
                 //only Category
-                else if (query.Title == null && query.Category != null)
+                else if (query.Title == null && cat != null)
                 {
-                    searchResults = adverts.Where(x => x.Categories.Contains(query.Category));
+                    searchResults = adverts.Where(x => x.Categories.Contains(cat));
                     
                     if (query.Attributes != null)
                     {
@@ -50,7 +53,7 @@ namespace Lollipop.Application.Advertisement.Queries
                 {
                     searchResults = adverts
                         .Where(x => x.Title.Contains(query.Title))
-                        .Where(x => x.Categories.Contains(query.Category));
+                        .Where(x => x.Categories.Contains(cat));
                     
                     if (query.Attributes != null)
                     {

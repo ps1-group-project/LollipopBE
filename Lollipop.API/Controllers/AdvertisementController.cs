@@ -69,7 +69,7 @@
         public async Task<IEnumerable<AdvImage>> GetImages([FromQuery] GetAdvertisementImagesQuery query) =>
             await _mediator.Send(query);
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Advertisement>>> SearchWithAttributes([FromQuery] SearchAdvertistementQuery query) =>
+        public async Task<ActionResult<IEnumerable<Advertisement>>> Search([FromQuery] SearchAdvertisementsQuery query) =>
             Ok(await _mediator.Send(query));
     }
 }
