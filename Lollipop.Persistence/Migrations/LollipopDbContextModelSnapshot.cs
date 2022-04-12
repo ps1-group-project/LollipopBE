@@ -58,8 +58,8 @@ namespace Lollipop.Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
 
                     b.Property<int>("VisitorCounter")
                         .HasColumnType("integer");
@@ -154,6 +154,9 @@ namespace Lollipop.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int?>("AdvertisementId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("CategoryId")
                         .HasColumnType("integer");
 
@@ -164,6 +167,8 @@ namespace Lollipop.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdvertisementId");
 
                     b.HasIndex("CategoryId");
 
@@ -420,6 +425,10 @@ namespace Lollipop.Persistence.Migrations
 
             modelBuilder.Entity("Lollipop.Core.Models.AttributeC", b =>
                 {
+                    b.HasOne("Lollipop.Core.Models.Advertisement", null)
+                        .WithMany("Attributes")
+                        .HasForeignKey("AdvertisementId");
+
                     b.HasOne("Lollipop.Core.Models.Category", null)
                         .WithMany("Attributes")
                         .HasForeignKey("CategoryId");
@@ -523,6 +532,8 @@ namespace Lollipop.Persistence.Migrations
 
             modelBuilder.Entity("Lollipop.Core.Models.Advertisement", b =>
                 {
+                    b.Navigation("Attributes");
+
                     b.Navigation("Images");
                 });
 

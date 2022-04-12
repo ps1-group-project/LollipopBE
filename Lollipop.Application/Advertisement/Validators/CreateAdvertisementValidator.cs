@@ -17,9 +17,7 @@
                 .WithMessage("Advertisement must have category");
             RuleFor(x => x.UserId)
                 .NotNull()
-                .WithMessage("User id cannot be null")
-                .GreaterThanOrEqualTo(0)
-                .WithMessage("User id cannot be negative");
+                .WithMessage("User id cannot be null");
         } 
     }
 }

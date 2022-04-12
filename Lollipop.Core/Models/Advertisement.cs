@@ -9,7 +9,7 @@
         /// <summary>
         /// Author's id
         /// </summary>
-        public int UserId { get; private set; }
+        public string UserId { get; private set; }
 
         /// <summary>
         /// Visitor counter
@@ -31,6 +31,8 @@
         /// </summary>
         public ICollection<Category> Categories { get; private set; } = new List<Category>();
 
+        public ICollection<AttributeC> Attributes { get; private set; } = new List<AttributeC>();
+
         /// <summary>
         /// Keywords
         /// </summary>
@@ -49,7 +51,7 @@
         public void SetContent(string content) => this.Content = content;
         private Advertisement(){}
 
-        private Advertisement(int userId, string title, string content)
+        private Advertisement(string userId, string title, string content)
         {
             UserId = userId;
             VisitorCounter = 0;
@@ -67,7 +69,7 @@
         /// <param name="categories">Categories</param>
         /// <param name="keywords">Keywords</param>
         /// <returns>New advertisement</returns>
-        public static Advertisement Create(int userId, string title, string content)
+        public static Advertisement Create(string userId, string title, string content)
         {
             return new(userId, title, content);
         }
@@ -108,6 +110,42 @@
             if (!Images.Contains(im))
             {
                 Images.Add(im);
+            }
+        }
+
+        public void AddAttribute(AttributeC att)
+        {
+            if (!Attributes.Contains(att))
+            {
+                Attributes.Add(att);
+            }
+        }
+
+        public void RemoveAttribute(AttributeC att)
+        {
+            Attributes.Remove(att);
+        }
+
+        public bool SameAttributeValue(AttributeC att)
+        {
+            foreach (AttributeC attribute in Attributes)
+            {
+                if (attribute.Type == att.Type && attribute.Name == att.Name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public void EditAttribute(AttributeC att)
+        {
+            foreach (AttributeC attribute in Attributes)
+            {
+                if (attribute.Type == att.Type)
+                {
+                    attribute.SetName(att.Name);
+                }
             }
         }
     }
