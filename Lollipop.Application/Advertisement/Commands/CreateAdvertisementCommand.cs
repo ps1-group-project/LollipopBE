@@ -12,7 +12,7 @@
 
     public class CreateAdvertisementCommand : IRequest<int>
     {
-        public int UserId { get; init; }
+        public string UserId { get; init; }
         public string Title { get; set; }
         public string Content { get; set; }
         public IEnumerable<Category> Categories { get; set; }
