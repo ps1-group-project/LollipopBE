@@ -9,7 +9,7 @@
         /// <summary>
         /// Author's id
         /// </summary>
-        public int UserId { get; private set; }
+        public string UserId { get; private set; }
 
         /// <summary>
         /// Visitor counter
@@ -49,7 +49,7 @@
         public void SetContent(string content) => this.Content = content;
         private Advertisement(){}
 
-        private Advertisement(int userId, string title, string content)
+        private Advertisement(string userId, string title, string content)
         {
             UserId = userId;
             VisitorCounter = 0;
@@ -67,7 +67,7 @@
         /// <param name="categories">Categories</param>
         /// <param name="keywords">Keywords</param>
         /// <returns>New advertisement</returns>
-        public static Advertisement Create(int userId, string title, string content)
+        public static Advertisement Create(string userId, string title, string content)
         {
             return new(userId, title, content);
         }
