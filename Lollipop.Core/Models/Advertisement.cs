@@ -31,6 +31,8 @@
         /// </summary>
         public ICollection<Category> Categories { get; private set; } = new List<Category>();
 
+        public ICollection<AttributeC> Attributes { get; private set; } = new List<AttributeC>();
+
         /// <summary>
         /// Keywords
         /// </summary>
@@ -108,6 +110,42 @@
             if (!Images.Contains(im))
             {
                 Images.Add(im);
+            }
+        }
+
+        public void AddAttribute(AttributeC att)
+        {
+            if (!Attributes.Contains(att))
+            {
+                Attributes.Add(att);
+            }
+        }
+
+        public void RemoveAttribute(AttributeC att)
+        {
+            Attributes.Remove(att);
+        }
+
+        public bool SameAttributeValue(AttributeC att)
+        {
+            foreach (AttributeC attribute in Attributes)
+            {
+                if (attribute.Type == att.Type && attribute.Name == att.Name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public void EditAttribute(AttributeC att)
+        {
+            foreach (AttributeC attribute in Attributes)
+            {
+                if (attribute.Type == att.Type)
+                {
+                    attribute.SetName(att.Name);
+                }
             }
         }
     }
