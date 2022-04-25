@@ -1,14 +1,13 @@
 ﻿namespace Lollipop.Application.Advertisement.Commands
 {
+    using FluentValidation;
+    using Lollipop.Application.Advertisement.Validators;
     using Lollipop.Application.Repository;
+    using Lollipop.Core.Models;
     using MediatR;
-    using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Lollipop.Core.Models;
-    using System.Collections.Generic;
-    using Lollipop.Application.Advertisement.Validators;
-    using FluentValidation;
 
     public class CreateAdvertisementCommand : IRequest<int>
     {
@@ -30,8 +29,18 @@
                 await new CreateAdvertisementValidator().ValidateAndThrowAsync(request, cancellationToken);
 
                 Advertisement advert = Advertisement.Create(request.UserId, request.Title, request.Content);
+
+                foreach (var category in request.Categories)
+                {
+                    advert.AddCategory(category);
+                }
+                foreach (var keyword in request.Keywords)
+                {
+                    advert.AddKeyword(keyword);
+                }
+
                 await _repository.AddAsync(advert);
-                
+
                 return advert.Id;
             }
         }
