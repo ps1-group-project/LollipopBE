@@ -15,7 +15,7 @@
         public string UserId { get; init; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<int> Categories { get; set; }
         public IEnumerable<Keyword> Keywords { get; set; }
 
         public class Handler : IRequestHandler<CreateAdvertisementCommand, int>
