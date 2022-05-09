@@ -1,12 +1,12 @@
 ﻿namespace Lollipop.Application.Message.Queries
 {
-    using MediatR;
-    using System.Threading.Tasks;
-    using Lollipop.Core.Models;
-    using System.Threading;
     using Lollipop.Application.Repository;
-    using System.Collections.Generic;
+    using Lollipop.Core.Models;
     using Lollipop.Core.Specification;
+    using MediatR;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public class GetAllForAuthorQuery : IRequest<IEnumerable<Message>>
     {
@@ -21,9 +21,10 @@
             }
             public async Task<IEnumerable<Message>> Handle(GetAllForAuthorQuery request, CancellationToken cancellationToken)
             {
+                MessageSpecification spec = new(filterBy: new() { x => x.AuthorId == request.AuthorId });
+                var list = await _repository.GetAllAsync(spec);
 
-
-                return new List<Message>();//await _repository.GetAllAsync(m => m.AuthorId == request.AuthorId); to fix
+                return list;
             }
         }
     }
